@@ -9,4 +9,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #e4e7ec;
+}
+.staff {
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
 }

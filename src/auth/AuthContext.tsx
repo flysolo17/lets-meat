@@ -1,14 +1,17 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import { auth } from "../config/config";
+import { firestore } from "../config/config";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   User,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { Users } from "./models/Users";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 interface IAuthContextProps {
   currentUser: User;
-  signup: (email: string, password: string) => void;
+  signup: (email: string, password: string, users: Users) => void;
   login: (email: string, password: string) => void;
   logout: any;
 }
@@ -28,7 +31,6 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-
   const login = (email: string, password: string) => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
@@ -42,11 +44,12 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (
         setLoading(false);
       });
   };
-  const signup = (email: string, password: string) => {
+  const signup = (email: string, password: string, users: Users) => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((credential) => {
         console.log(credential.user);
+        createUser({ ...users, id: credential.user.uid });
       })
       .catch((error) => {
         console.log(error);
@@ -54,6 +57,14 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (
       .finally(() => {
         setLoading(false);
       });
+  };
+  const createUser = async (user: Users) => {
+    try {
+      await setDoc(doc(firestore, "Users", user.id), user);
+      console.log("success!");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
   const logout = () => {
     auth

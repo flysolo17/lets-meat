@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-
 export interface IAuthRouteProps {
   children: any;
 }

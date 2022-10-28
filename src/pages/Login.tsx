@@ -19,7 +19,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import UCULogo from "../images/logo.png";
 import Frozen from "../images/frozen-logo.png";
 import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
+
+import { Divider, Paper } from "@mui/material";
 function Copyright(props: any) {
   return (
     <Typography
@@ -34,7 +35,6 @@ function Copyright(props: any) {
     </Typography>
   );
 }
-const theme = createTheme();
 
 interface LoginPageProps {}
 
@@ -51,98 +51,132 @@ const LoginPage: React.FunctionComponent<LoginPageProps> = () => {
 
   return (
     <div className="login-card">
-      <Stack
-        direction={"row"}
-        spacing={5}
+      <Paper
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: 5,
+          width: 1080,
+          height: 680,
+          borderRadius: 10,
+          backgroundColor: "white",
         }}
+        elevation={1}
       >
-        <Box sx={{ padding: 2, backgroundColor: "red" }}>
-          <img src={UCULogo} />
-        </Box>
-        <Typography component="h1" variant="h4">
-          X
-        </Typography>
-        <img src={Frozen} width="90" height={"100"} />
-      </Stack>
-
-      
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Paper
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: 10,
-            }}
-            elevation={2}
-          >
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Typography component="h1" variant="h6">
-              Welcome Back!
-            </Typography>
+        <Stack
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          direction={"row"}
+        >
+          <Container component="main" maxWidth="xs" sx={{ width: "50%" }}>
+            <CssBaseline />
             <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <Typography component="h1" variant="h6">
+                Welcome Back!
+              </Typography>
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                noValidate
+                sx={{ mt: 1 }}
               >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <Container
+                  sx={{
+                    display: "flex",
+                    alignItems: "end",
+                    justifyContent: "end",
+                  }}
+                >
                   <Link to={"/signup"}>{"Forgot Password"}</Link>
-                </Grid>
-                <Grid item>
+                </Container>
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+
+                <Container
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <Link to={"/signup"}>{"Don't have an account? Sign up"}</Link>
-                </Grid>
-              </Grid>
+                </Container>
+              </Box>
             </Box>
-          </Paper>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
-      </ThemeProvider>
+          </Container>
+
+          <Divider orientation="vertical" flexItem />
+          <Box
+            sx={{
+              width: "50%",
+              height: "100%",
+              borderRadiusRight: "10px",
+              backgroundColor: "#101828",
+            }}
+          >
+            <Stack
+              direction={"column"}
+              spacing={5}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 10,
+              }}
+            >
+              <Box sx={{ padding: 2, backgroundColor: "red" }}>
+                <img src={UCULogo} />
+              </Box>
+              <Typography component="h1" variant="h4">
+                X
+              </Typography>
+              <img src={Frozen} width="100" height={"120"} />
+              <Copyright sx={{ mt: 8, mb: 4 }} />
+            </Stack>
+          </Box>
+        </Stack>
+      </Paper>
     </div>
   );
 };

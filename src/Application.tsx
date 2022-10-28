@@ -6,6 +6,7 @@ import LoginPage from "./pages/Login";
 import MainPage from "./pages/Main";
 import SignupPage from "./pages/Signup";
 import "./App.css";
+import NavBar from "./components/NavBar";
 interface ApplicationProps {}
 
 const Application: React.FunctionComponent<ApplicationProps> = (props) => {
@@ -18,7 +19,7 @@ const Application: React.FunctionComponent<ApplicationProps> = (props) => {
               path={"/"}
               element={
                 <AuthRoute>
-                  <MainPage />
+                    <MainPage />
                 </AuthRoute>
               }
             />
