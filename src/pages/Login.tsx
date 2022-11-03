@@ -1,25 +1,23 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "../auth/AuthContext";
-import { auth } from "../config/config";
+
 import { useNavigate } from "react-router-dom";
-import React, { useRef, useState } from "react";
-import Avatar from "@mui/material/Avatar";
+import React, { useState } from "react";
+
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+
 import { Link } from "react-router-dom";
-import Grid from "@mui/material/Grid";
+
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 import UCULogo from "../images/logo.png";
 import Frozen from "../images/frozen-logo.png";
 import Stack from "@mui/material/Stack";
-
+import LetsMeat from "../images/letsmeat.png";
 import { Divider, Paper } from "@mui/material";
 function Copyright(props: any) {
   return (
@@ -51,132 +49,100 @@ const LoginPage: React.FunctionComponent<LoginPageProps> = () => {
 
   return (
     <div className="login-card">
-      <Paper
+      <Box
         sx={{
-          width: 1080,
-          height: 680,
-          borderRadius: 10,
+          width: 680,
+          height: "60%",
           backgroundColor: "white",
         }}
-        elevation={1}
       >
+        <Container
+          sx={{
+            height: "20%",
+            width: "100%",
+            backgroundColor: "#145607",
+            display: "flex",
+            borderLeft: 10,
+            borderColor: "#8FD256",
+            alignItems: "center",
+          }}
+        >
+          <img src={UCULogo} height={60} />
+        </Container>
         <Stack
           sx={{
             width: "100%",
-            height: "100%",
-            display: "flex",
+            height: "80%",
+            backgroundColor: "white",
             alignItems: "center",
+            display: "flex",
             justifyContent: "center",
           }}
-          direction={"row"}
+          direction={"column"}
         >
-          <Container component="main" maxWidth="xs" sx={{ width: "50%" }}>
-            <CssBaseline />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Typography component="h1" variant="h6">
-                Welcome Back!
-              </Typography>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-                sx={{ mt: 1 }}
-              >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <Container
-                  sx={{
-                    display: "flex",
-                    alignItems: "end",
-                    justifyContent: "end",
-                  }}
-                >
-                  <Link to={"/signup"}>{"Forgot Password"}</Link>
-                </Container>
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button>
-
-                <Container
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Link to={"/signup"}>{"Don't have an account? Sign up"}</Link>
-                </Container>
-              </Box>
-            </Box>
-          </Container>
-
-          <Divider orientation="vertical" flexItem />
+          <img src={LetsMeat} width={"150px"} />
           <Box
-            sx={{
-              width: "50%",
-              height: "100%",
-              borderRadiusRight: "10px",
-              backgroundColor: "#101828",
-            }}
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
           >
-            <Stack
-              direction={"column"}
-              spacing={5}
+            <Typography
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: 10,
+                fontFamily: "Poppins",
+                fontSize: 30,
+                fontWeight: 700,
+                fontStyle: "bold",
               }}
             >
-              <Box sx={{ padding: 2, backgroundColor: "red" }}>
-                <img src={UCULogo} />
-              </Box>
-              <Typography component="h1" variant="h4">
-                X
-              </Typography>
-              <img src={Frozen} width="100" height={"120"} />
-              <Copyright sx={{ mt: 8, mb: 4 }} />
-            </Stack>
+              Login
+            </Typography>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <Container
+              sx={{
+                display: "flex",
+                alignItems: "end",
+                justifyContent: "end",
+              }}
+            >
+              <Link to={"/signup"}>{"Forgot Password"}</Link>
+            </Container>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color={"success"}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
           </Box>
         </Stack>
-      </Paper>
+      </Box>
     </div>
   );
 };

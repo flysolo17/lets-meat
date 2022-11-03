@@ -14,7 +14,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser != null) {
-        navigate("/");
+        navigate("/main");
       } else {
         navigate("/login");
       }

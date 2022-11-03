@@ -3,11 +3,15 @@ import { Container } from "@mui/system";
 import { useAuth } from "../auth/AuthContext";
 import StaffCard from "../components/StaffCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import PinView from "../components/PinView";
+import React, { useState } from "react";
 interface MainPagePops {}
 
 const MainPage: React.FunctionComponent<MainPagePops> = () => {
   const { logout } = useAuth();
-
+  const [user, setUser] = useState();
   return (
     <Stack
       direction={"column"}
@@ -16,14 +20,6 @@ const MainPage: React.FunctionComponent<MainPagePops> = () => {
         height: "100vh",
       }}
     >
-      <Button
-        variant="text"
-        startIcon={<ArrowBackIcon />}
-        sx={{ width: "200px", color: "black" }}
-        onClick={logout}
-      >
-        Logout
-      </Button>
       <Box
         sx={{
           width: "100%",
@@ -36,26 +32,22 @@ const MainPage: React.FunctionComponent<MainPagePops> = () => {
         padding={5}
       >
         <Stack direction={"column"} alignItems={"center"}>
-          <Typography component={"h2"} variant={"h3"}>
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: 40,
+              fontWeight: 700,
+              fontStyle: "bold",
+            }}
+          >
             {" "}
             Frozen Meat Shop
           </Typography>
           <Typography component={"h2"} variant={"h6"}>
-            by John Mark Ballangca
+            powered by Let's Meat
           </Typography>
         </Stack>
         <Stack direction={"column"}>
-          <Typography variant="h4" component={"h2"} marginLeft={3}>
-            Staff Login
-          </Typography>
-          <Typography
-            variant="h6"
-            component={"h2"}
-            marginLeft={3}
-            color={"text.sencondary"}
-          >
-            Do not share you pin.
-          </Typography>
           <Stack direction={"row"} spacing={3}>
             <StaffCard />
             <StaffCard />
@@ -64,9 +56,36 @@ const MainPage: React.FunctionComponent<MainPagePops> = () => {
             <StaffCard />
           </Stack>
         </Stack>
-
-        <Stack>
-          <Button color="error">Login as Admin</Button>
+        <Stack direction={"row"} spacing={2}>
+          <Stack
+            direction={"column"}
+            spacing={1}
+            onClick={logout}
+            sx={{
+              padding: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "&:hover": {
+                backgroundColor: "#D6F7A9",
+                boxShadow: "none",
+                borderRadius: "10px",
+              },
+            }}
+          >
+            <LogoutIcon sx={{ width: 50, height: 50 }} />
+            <Typography
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: 20,
+                fontWeight: 700,
+                fontStyle: "bold",
+              }}
+            >
+              Logout
+            </Typography>
+          </Stack>
+          <PinView adminPin="1234" />
         </Stack>
       </Box>
     </Stack>

@@ -12,7 +12,7 @@ const StaffCard: React.FunctionComponent<StaffCardProps> = () => {
           padding: 1,
           alignItems: "center",
           "&:hover": {
-            backgroundColor: "#FFC4AD",
+            backgroundColor: "#D6F7A9",
             boxShadow: "none",
             borderRadius: "10px",
           },
@@ -28,7 +28,7 @@ const StaffCard: React.FunctionComponent<StaffCardProps> = () => {
           variant={"h6"}
           sx={{ textAlign: "center" }}
         >
-          John Mark Ballangca
+          Sample Staff
         </Typography>
         <LockIcon />
       </Stack>

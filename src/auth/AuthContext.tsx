@@ -30,7 +30,12 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (
   const { children } = props;
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsub();
+  }, []);
   const login = (email: string, password: string) => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
