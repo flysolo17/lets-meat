@@ -27,11 +27,14 @@ import Grid from "@mui/material/Grid";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useNavigate } from "react-router-dom";
+
 interface PinViewProps {
   adminPin: string;
 }
 
 const PinView: React.FunctionComponent<PinViewProps> = (props) => {
+
+
   const { adminPin } = props;
   const [open, setOpen] = useState(false);
   const [pin, setPin] = useState("");
@@ -65,7 +68,9 @@ const PinView: React.FunctionComponent<PinViewProps> = (props) => {
       boxShadow: "none",
       borderRadius: "10px",
     },
+    
   }));
+
   const isPinCorrect = () => {
     if (pin == adminPin) {
       navigate("/");

@@ -1,6 +1,7 @@
 import { QueryDocumentSnapshot } from "firebase/firestore";
 
 export interface Products {
+  code: string;
   userID: string;
   images: string;
   productName: string;

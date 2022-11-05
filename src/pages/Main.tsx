@@ -41,7 +41,7 @@ const MainPage: React.FunctionComponent<MainPagePops> = () => {
             }}
           >
             {" "}
-            Frozen Meat Shop
+            JJF FROZEN FOODS
           </Typography>
           <Typography component={"h2"} variant={"h6"}>
             powered by Let's Meat
@@ -85,6 +85,7 @@ const MainPage: React.FunctionComponent<MainPagePops> = () => {
               Logout
             </Typography>
           </Stack>
+
           <PinView adminPin="1234" />
         </Stack>
       </Box>

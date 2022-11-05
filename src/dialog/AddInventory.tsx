@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import Box from "@mui/material/Box";
@@ -26,7 +26,7 @@ import {
   PRODUCTS_TABLE,
   PRODUCT_STORAGE,
 } from "../utils/Constants";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Products } from "../models/Products";
 import { useAuth } from "../auth/AuthContext";
 import { v4 as uuidv4 } from "uuid";
@@ -48,6 +48,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
   const [forUpload, setForUpload] = useState("");
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState<Products>({
+    code: "",
     userID: currentUser.uid,
     images: "",
     productName: "",
@@ -75,6 +76,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
 
   const handleClose = () => {
     setProduct({
+      code: "",
       userID: currentUser.uid,
       images: "",
       productName: "",
@@ -92,7 +94,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
   };
   function uploadFile(file: any) {
     setLoading(true);
-    if (file == null) return;
+    if (file == null && product.code != "") return;
     const fireRef = ref(
       storage,
       `${currentUser.uid!}/${PRODUCT_STORAGE}/${uuidv4()}`
@@ -101,7 +103,8 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           console.log(url);
-          addDoc(collection(firestore, PRODUCTS_TABLE), {
+
+          setDoc(doc(firestore, PRODUCTS_TABLE, product.code), {
             ...product,
             images: url,
           })
@@ -126,17 +129,21 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
   }
   const uploadItem = () => {
     setLoading(true);
-    addDoc(collection(firestore, PRODUCTS_TABLE), product)
-      .then(() => {
-        console.log("New item added!");
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-        handleClose();
-      });
+    if (product.code != "") {
+      setDoc(doc(firestore, PRODUCTS_TABLE, product.code), product)
+        .then(() => {
+          console.log("New item added!");
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+          handleClose();
+        });
+    } else {
+      setLoading(false);
+    }
   };
 
   const addItemInventory = (e: any) => {
@@ -250,6 +257,16 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
               sx={{ width: "60%", padding: 5 }}
             >
               <TextField
+                label={"Product Code"}
+                variant={"filled"}
+                type={"number"}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                required
+                onChange={(e) =>
+                  setProduct({ ...product, code: e.target.value })
+                }
+              />
+              <TextField
                 label={"Product name"}
                 variant={"filled"}
                 value={product.productName}
@@ -259,9 +276,9 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
               />
               <TextField
                 id="outlined-multiline-static"
-                label="Descriptiom"
+                label="Description"
                 multiline
-                rows={6}
+                rows={4}
                 variant={"filled"}
                 value={product.description}
                 onChange={(e) =>
@@ -272,7 +289,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                 id="outlined-multiline-static"
                 label="Details"
                 multiline
-                rows={6}
+                rows={4}
                 variant={"filled"}
                 value={product.details}
                 onChange={(e) =>
@@ -283,6 +300,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                 label={"Quantity"}
                 variant={"filled"}
                 type={"number"}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 value={product.quantity}
                 onChange={(e) =>
                   setProduct({ ...product, quantity: parseInt(e.target.value) })
@@ -291,6 +309,8 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
               <TextField
                 label={"Cost"}
                 variant={"filled"}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                required
                 type={"number"}
                 value={product.cost}
                 onChange={(e) =>
@@ -301,6 +321,8 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                 label={"Price"}
                 variant={"filled"}
                 type={"number"}
+                required
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 value={product.price}
                 onChange={(e) =>
                   setProduct({ ...product, price: parseInt(e.target.value) })
