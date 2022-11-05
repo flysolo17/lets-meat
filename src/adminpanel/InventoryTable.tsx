@@ -20,6 +20,7 @@ import { useAuth } from "../auth/AuthContext";
 import { Button, Stack } from "@mui/material";
 import DeleteProductDialog from "../dialog/DeleteProduct";
 import UpdateProductDialog from "../dialog/UpdateProduct";
+import ViewProductDialog from "../dialog/ViewProduct";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -133,9 +134,7 @@ const InventoryTable: React.FunctionComponent<InventoryTableProps> = (
                       justifyContent: "center",
                     }}
                   >
-                    <Button color="success" variant={"contained"}>
-                      View
-                    </Button>
+                    <ViewProductDialog product={row} />
                     <UpdateProductDialog
                       product={row}
                       currentUser={currentUser.uid}

@@ -25,14 +25,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { PRODUCTS_TABLE, PRODUCT_STORAGE } from "../utils/Constants";
 import { doc, Firestore, setDoc, updateDoc } from "firebase/firestore";
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+
 
 interface UpdateProductDialogProps {
   product: Products;
