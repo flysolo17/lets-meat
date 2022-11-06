@@ -25,8 +25,6 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { PRODUCTS_TABLE, PRODUCT_STORAGE } from "../utils/Constants";
 import { doc, Firestore, setDoc, updateDoc } from "firebase/firestore";
 
-
-
 interface UpdateProductDialogProps {
   product: Products;
   currentUser: string;
@@ -201,7 +199,7 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
             <Stack sx={{ width: "70%" }} direction={"column"} spacing={2}>
               <TextField
                 label={"Product Code"}
-                variant={"filled"}    
+                variant={"filled"}
                 value={product.code}
               />
               <TextField
@@ -234,6 +232,7 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
                 label="Details"
                 multiline
                 rows={4}
+                helperText="Put a sentence ends with a period"
                 variant={"filled"}
                 value={updatedProduct.details}
                 onChange={(e) =>

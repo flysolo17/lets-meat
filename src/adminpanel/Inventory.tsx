@@ -1,21 +1,10 @@
-import { Container, Box, Stack } from "@mui/material";
+import { Container, Box, Stack, Typography } from "@mui/material";
 import AddInventoryPage from "../dialog/AddInventory";
-import { experimentalStyled as styled } from "@mui/material/styles";
+
 import React, { useEffect, useState } from "react";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import ProductCard from "../components/ProductCard";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import { useAuth } from "../auth/AuthContext";
-import { firestore } from "../config/config";
-import { PRODUCTS_TABLE } from "../utils/Constants";
+
+import Divider from "@mui/material/Divider";
+
 import InventoryTable from "./InventoryTable";
 interface InventoryPageProps {}
 
@@ -33,13 +22,25 @@ const InventoryPage: React.FunctionComponent<InventoryPageProps> = () => {
       <Stack direction={"column"} spacing={2} sx={{ width: "100%" }}>
         <Box
           sx={{
-            alignItems: "end",
+            flexGrow: 1,
+            alignItems: "center",
             display: "flex",
-            justifyContent: "end",
+            justifyContent: "space-between",
           }}
         >
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              fontWeight: 400,
+              fontSize: 30,
+              fontStyle: "normal",
+            }}
+          >
+            Inventory
+          </Typography>
           <AddInventoryPage />
         </Box>
+        <Divider />
         <InventoryTable />
       </Stack>
     </Box>

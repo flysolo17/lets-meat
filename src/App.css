@@ -20,3 +20,6 @@
   width: 100px;
   height: 100px;
 }
+.details-list {
+  list-style: none;
+}

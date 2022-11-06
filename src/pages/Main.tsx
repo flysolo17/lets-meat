@@ -7,6 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PinView from "../components/PinView";
 import React, { useState } from "react";
+import AddStaffDialog from "../dialog/AddStaff";
 interface MainPagePops {}
 
 const MainPage: React.FunctionComponent<MainPagePops> = () => {
@@ -87,6 +88,7 @@ const MainPage: React.FunctionComponent<MainPagePops> = () => {
           </Stack>
 
           <PinView adminPin="1234" />
+
         </Stack>
       </Box>
     </Stack>

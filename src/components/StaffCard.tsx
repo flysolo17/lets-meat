@@ -17,6 +17,7 @@ const StaffCard: React.FunctionComponent<StaffCardProps> = () => {
             borderRadius: "10px",
           },
         }}
+        
         spacing={1}
       >
         <img

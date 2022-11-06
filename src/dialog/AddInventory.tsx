@@ -291,6 +291,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                 multiline
                 rows={4}
                 variant={"filled"}
+                helperText="Put a sentence ends with a period"
                 value={product.details}
                 onChange={(e) =>
                   setProduct({ ...product, details: e.target.value })

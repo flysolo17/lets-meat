@@ -56,7 +56,10 @@ const NavBar: React.FunctionComponent<NavBarProps> = (props) => {
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, backgroundColor: "#F9FFEF", minHeight: "100vh" }}
+      >
         <main className="main-content">{children}</main>
       </Box>
     </Box>
