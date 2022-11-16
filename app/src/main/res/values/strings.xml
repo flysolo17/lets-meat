@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Lets Meat</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="cart">Cart</string>
+    <string name="account">Account</string>
+    <string name="messages">Messages</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample">Sample</string>
+    <string name="placeholder"> dfvsdfvsgsfgsdfgfsdgdfgdfgdfgdfgfdgdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdf</string>
+    <string name="product_name">Product Name</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="email">@</string>
+    <string name="emails">Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="new_to_let_s_meat">New to Let\'s Meat?</string>
+    <string name="phone">Phone</string>
+    <string name="sign_in">Sign in</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="juan_dela_cruz">Juan Dela Cruz</string>
+    <string name="edit">Edit</string>
+    <string name="your_cart_is_empty">YOUR CART IS EMPTY!</string>
+    <string name="no_user_found">No user found!</string>
+    <string name="login">Login</string>
+</resources>

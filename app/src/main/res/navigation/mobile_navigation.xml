@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.ciejaycoding.letsmeat.view.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_viewProduct"
+            app:destination="@id/viewProduct"
+           />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_cart"
+        android:name="com.ciejaycoding.letsmeat.view.cart.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" >
+
+        <action
+            android:id="@+id/action_navigation_cart_to_loginFragment2"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.ciejaycoding.letsmeat.view.messages.MessagesFragment"
+        android:label="Messages"
+        tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.ciejaycoding.letsmeat.view.account.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/viewProduct"
+        android:name="com.ciejaycoding.letsmeat.view.product.ViewProduct"
+        android:label=""
+        tools:layout="@layout/fragment_view_product" >
+
+        <argument
+            android:name="products"
+            app:argType="com.ciejaycoding.letsmeat.models.Products" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ciejaycoding.letsmeat.view.auth.LoginFragment"
+        android:label=""
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.ciejaycoding.letsmeat.view.auth.SignUpFragment"
+        android:label=""
+        tools:layout="@layout/fragment_sign_up" />
+</navigation>

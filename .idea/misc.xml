@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/bg_counter.xml" value="0.278" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.278" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/circle.xml" value="0.322" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/ic_baseline_local_phone_24.xml" value="0.3635" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/ic_baseline_lock_open_24.xml" value="0.3635" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.3195" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.3055" />
+        <entry key="..\:/LetsMeat/app/src/main/res/drawable/nav_bg.xml" value="0.2335" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/activity_main.xml" value="0.3037037037037037" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/bottom_add_cart.xml" value="0.25" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_account.xml" value="0.35280797101449274" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_cart.xml" value="0.22" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_dashboard.xml" value="0.35280797101449274" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_home.xml" value="0.35280797101449274" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_messages.xml" value="0.35280797101449274" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_sign_up.xml" value="0.3383152173913043" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/fragment_view_product.xml" value="0.4770992366412214" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/loading.xml" value="0.3614583333333333" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/loading_dialog.xml" value="0.3625" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/row_cart.xml" value="0.33" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/row_details.xml" value="0.5" />
+        <entry key="..\:/LetsMeat/app/src/main/res/layout/row_products.xml" value="0.35280797101449274" />
+        <entry key="..\:/LetsMeat/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
