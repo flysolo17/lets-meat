@@ -1,3 +1,5 @@
+import { QueryDocumentSnapshot } from "firebase/firestore";
+
 export interface Users {
   id: string;
   firstName: string;
@@ -7,3 +9,7 @@ export interface Users {
   branchCode: string;
   email: string;
 }
+export const userConverter = {
+  toFirestore: (data: Users) => data,
+  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as Users,
+};

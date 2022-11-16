@@ -1,33 +1,49 @@
-import React, { useState, useEffect } from "react";
-
-import Dialog from "@mui/material/Dialog";
-
-
-import Typography from "@mui/material/Typography";
-
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import Stack from "@mui/material/Stack";
+import { experimentalStyled as styled } from "@mui/material/styles";
 import {
-
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Avatar,
+  Stack,
+  Dialog,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
-import Grid from "@mui/material/Grid";
-import BackspaceIcon from "@mui/icons-material/Backspace";
+import LockIcon from "@mui/icons-material/Lock";
+import { Staff } from "../models/Staff";
+import React, { useState, useEffect } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useNavigate } from "react-router-dom";
-import { Staff } from "../models/Staff";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 
-interface PinViewProps {
-  adminPin: string;
+import BackspaceIcon from "@mui/icons-material/Backspace";
+
+import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { STAFF_ID } from "../utils/Constants";
+
+const Item = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  textAlign: "center",
+  fontFamily: "Poppins",
+  fontStyle: "normal",
+  fontWeight: 500,
+  fontSize: 30,
+  color: theme.palette.text.secondary,
+  "&:hover": {
+    backgroundColor: "#F2F4F7",
+    boxShadow: "none",
+    borderRadius: "10px",
+  },
+}));
+interface StaffPinViewProps {
+  row: Staff;
+  id: string;
 }
 
-const PinView: React.FunctionComponent<PinViewProps> = (props) => {
-  const { adminPin } = props;
+const StaffPinView: React.FunctionComponent<StaffPinViewProps> = (props) => {
+  const { row, id } = props;
+
   const [open, setOpen] = useState(false);
   const [pin, setPin] = useState("");
   const [wrongPassword, setWrongPassword] = useState<String | null>(null);
@@ -45,32 +61,15 @@ const PinView: React.FunctionComponent<PinViewProps> = (props) => {
     }
   }, [pin]);
 
-  const Item = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: 500,
-    fontSize: 30,
-    color: theme.palette.text.secondary,
-    "&:hover": {
-      backgroundColor: "#F2F4F7",
-      boxShadow: "none",
-      borderRadius: "10px",
-    },
-  }));
-
   const isPinCorrect = () => {
-    if (pin == adminPin) {
-      navigate("/");
+    if (pin == row.pin) {
+      localStorage.setItem(STAFF_ID, id);
+      navigate("/cashier");
     } else {
       setPin(pin.substring(0, pin.length - pin.length));
       setWrongPassword("Wrong Password try again!");
     }
   };
-
   function FirstRow() {
     return (
       <React.Fragment>
@@ -206,7 +205,6 @@ const PinView: React.FunctionComponent<PinViewProps> = (props) => {
       </React.Fragment>
     );
   }
-
   function identify(key: number, size: number) {
     if (key <= size) {
       return <FiberManualRecordIcon />;
@@ -215,101 +213,94 @@ const PinView: React.FunctionComponent<PinViewProps> = (props) => {
     }
   }
   return (
-    <>
-      <div>
-        <Stack
-          direction={"column"}
-          spacing={1}
-          onClick={handleClickOpen}
+    <div>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+        onClick={handleClickOpen}
+      >
+        <Avatar
+          src={row.profile}
+          variant="rounded"
+          sx={{ width: 100, height: 100 }}
+        />
+        <Typography
+          component={"h1"}
+          variant={"h6"}
+          sx={{ textAlign: "center" }}
+        >
+          {row.displayName}
+        </Typography>
+        <LockIcon />
+      </Box>
+      <Dialog fullWidth maxWidth={"lg"} open={open} onClose={handleClose}>
+        <DialogTitle
+          textAlign={"center"}
           sx={{
-            padding: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            "&:hover": {
-              backgroundColor: "#D6F7A9",
-              boxShadow: "none",
-              borderRadius: "10px",
-            },
+            fontFamily: "Poppins",
+            fontSize: 30,
+            fontWeight: 500,
+            fontStyle: "normal",
           }}
         >
-          <AdminPanelSettingsIcon sx={{ width: 50, height: 50 }} />
-          <Typography
+          Enter Your Pin
+        </DialogTitle>
+        <DialogContent>
+          <Stack
+            direction={"column"}
+            spacing={2}
             sx={{
-              fontFamily: "Poppins",
-              fontSize: 20,
-              fontWeight: 700,
-              fontStyle: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Admin
-          </Typography>
-        </Stack>
-        <Dialog fullWidth maxWidth={"lg"} open={open} onClose={handleClose}>
-          <DialogTitle
-            textAlign={"center"}
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: 30,
-              fontWeight: 500,
-              fontStyle: "normal",
-            }}
-          >
-            Enter Your Pin
-          </DialogTitle>
-          <DialogContent>
-            <Stack
-              direction={"column"}
-              spacing={2}
+            <DialogContentText
+              textAlign={"center"}
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                fontFamily: "Poppins",
+                fontSize: 24,
+                fontWeight: 300,
+                color: "black",
+                fontStyle: "normal",
               }}
             >
-              <DialogContentText
-                textAlign={"center"}
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: 24,
-                  fontWeight: 300,
-                  color: "black",
-                  fontStyle: "normal",
-                }}
-              >
-                {wrongPassword != null
-                  ? wrongPassword
-                  : "Do not share your pin to everyone"}
-              </DialogContentText>
+              {wrongPassword != null
+                ? wrongPassword
+                : "Do not share your pin to everyone"}
+            </DialogContentText>
 
-              <Stack direction={"row"} spacing={2}>
-                {[1, 2, 3, 4].map((value) => identify(value, pin.length))}
-              </Stack>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={1}>
-                  <Grid container item spacing={3}>
-                    <FirstRow />
-                  </Grid>
-                  <Grid container item spacing={3}>
-                    <SecondRow />
-                  </Grid>
-                  <Grid container item spacing={3}>
-                    <ThirdRow />
-                  </Grid>
-                  <Grid container item spacing={3}>
-                    <LastRow />
-                  </Grid>
-                  <Grid container item spacing={3}>
-                    <ActionsRow />
-                  </Grid>
-                </Grid>
-              </Box>
+            <Stack direction={"row"} spacing={2}>
+              {[1, 2, 3, 4].map((value) => identify(value, pin.length))}
             </Stack>
-          </DialogContent>
-        </Dialog>
-      </div>
-    </>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={1}>
+                <Grid container item spacing={3}>
+                  <FirstRow />
+                </Grid>
+                <Grid container item spacing={3}>
+                  <SecondRow />
+                </Grid>
+                <Grid container item spacing={3}>
+                  <ThirdRow />
+                </Grid>
+                <Grid container item spacing={3}>
+                  <LastRow />
+                </Grid>
+                <Grid container item spacing={3}>
+                  <ActionsRow />
+                </Grid>
+              </Grid>
+            </Box>
+          </Stack>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 
-export default PinView;
+export default StaffPinView;

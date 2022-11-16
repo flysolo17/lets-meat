@@ -17,6 +17,7 @@ import {
   LinearProgress,
   Paper,
   Stack,
+  Avatar,
   TextField,
 } from "@mui/material";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -58,6 +59,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
     description: "",
     details: "",
     isAvailable: true,
+    comments: [],
     createdAt: getTimestamp(),
   });
   const onImageChange = (event: any) => {
@@ -86,6 +88,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
       description: "",
       details: "",
       isAvailable: true,
+      comments: [],
       createdAt: getTimestamp(),
     });
     setForUpload("");
@@ -223,17 +226,14 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                 Product Catalogue
               </Typography>
 
-              {image != null ? (
-                <img src={image} alt="Product" width={"100%"} height={300} />
-              ) : (
-                <Box
-                  sx={{
-                    backgroundColor: "#D6F7A9",
-                    width: "100%",
-                    height: 300,
-                  }}
-                ></Box>
-              )}
+              <Avatar
+                src={image!}
+                variant={"rounded"}
+                sx={{ width: "100%", height: 300 }}
+                alt={"profile"}
+              >
+                No product image
+              </Avatar>
 
               <Button
                 variant="contained"

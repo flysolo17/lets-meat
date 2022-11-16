@@ -1,4 +1,5 @@
 import { QueryDocumentSnapshot } from "firebase/firestore";
+import { Comments } from "./Comments";
 
 export interface Products {
   code: string;
@@ -11,6 +12,7 @@ export interface Products {
   description: string;
   details: string;
   isAvailable: boolean;
+  comments: Comments[];
   createdAt: number;
 }
 

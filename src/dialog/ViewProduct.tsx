@@ -12,6 +12,7 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  Avatar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -67,22 +68,14 @@ const ViewProductDialog: React.FunctionComponent<ViewProductDialogProps> = (
             spacing={2}
           >
             <Stack sx={{ width: "30%" }} direction={"column"}>
-              {product.images != "" ? (
-                <img
-                  src={product.images}
-                  alt="Product"
-                  width={"100%"}
-                  height={300}
-                />
-              ) : (
-                <Box
-                  sx={{
-                    backgroundColor: "#D6F7A9",
-                    width: "100%",
-                    height: 300,
-                  }}
-                ></Box>
-              )}
+              <Avatar
+                src={product.images}
+                variant={"rounded"}
+                sx={{ width: "100%", height: 300 }}
+                alt={"Product"}
+              >
+                No Product image
+              </Avatar>
             </Stack>
             <Stack sx={{ width: "70%" }} direction={"column"} spacing={2}>
               <Typography

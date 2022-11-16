@@ -15,6 +15,7 @@ import {
   LinearProgress,
   Stack,
   TextField,
+  Avatar,
 } from "@mui/material";
 
 import { Products } from "../models/Products";
@@ -169,22 +170,14 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
             spacing={2}
           >
             <Stack sx={{ width: "30%" }} direction={"column"}>
-              {updatedProduct.images != "" ? (
-                <img
-                  src={updatedProduct.images}
-                  alt="Product"
-                  width={"100%"}
-                  height={300}
-                />
-              ) : (
-                <Box
-                  sx={{
-                    backgroundColor: "#D6F7A9",
-                    width: "100%",
-                    height: 300,
-                  }}
-                ></Box>
-              )}
+              <Avatar
+                variant={"rounded"}
+                sx={{ width: "100%", height: 300 }}
+                alt={"Product"}
+                src={updatedProduct.images!}
+              >
+                No Product Image
+              </Avatar>
               <Button variant="contained" component="label">
                 Change Image
                 <input

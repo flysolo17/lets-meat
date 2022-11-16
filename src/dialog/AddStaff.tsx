@@ -8,14 +8,17 @@ import {
   LinearProgress,
   Stack,
   TextField,
+  Avatar,
   Typography,
 } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { firestore, storage } from "../config/config";
 import { Staff } from "../models/Staff";
 import {
   PRODUCT_STORAGE,
+  STAFF_ROLE,
   STAFF_STORAGE,
   STAFF_TABLE,
 } from "../utils/Constants";
@@ -29,6 +32,10 @@ const AddStaffDialog: React.FunctionComponent<AddStaffDialogProps> = (
   props
 ) => {
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState("CASHIER");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRole(event.target.value);
+  };
   const { currentUser } = useAuth();
   const [staffProfile, setStaffProfile] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -36,6 +43,7 @@ const AddStaffDialog: React.FunctionComponent<AddStaffDialogProps> = (
     profile: "",
     displayName: "",
     fullname: "",
+    role: role,
     contactNumber: "",
     pin: "0000",
     employedAt: 0,
@@ -48,6 +56,7 @@ const AddStaffDialog: React.FunctionComponent<AddStaffDialogProps> = (
       profile: "",
       displayName: "",
       fullname: "",
+      role: role,
       contactNumber: "",
       pin: "0000",
       employedAt: 0,
@@ -149,22 +158,14 @@ const AddStaffDialog: React.FunctionComponent<AddStaffDialogProps> = (
         <DialogContent>
           <Stack direction={"row"} spacing={1} padding={2}>
             <Stack direction={"column"} spacing={0} sx={{ width: "30%" }}>
-              {staff.profile != "" ? (
-                <img
-                  src={staff.profile}
-                  alt="Staff Profile"
-                  width={"100%"}
-                  height={200}
-                />
-              ) : (
-                <Box
-                  sx={{
-                    backgroundColor: "#D6F7A9",
-                    width: "100%",
-                    height: 300,
-                  }}
-                ></Box>
-              )}
+              <Avatar
+                variant={"rounded"}
+                sx={{ width: "100%", height: 200 }}
+                alt={"staff profile"}
+                src={staff.profile}
+              >
+                No Staff Profile
+              </Avatar>
               <Button
                 variant="contained"
                 component="label"
@@ -187,10 +188,13 @@ const AddStaffDialog: React.FunctionComponent<AddStaffDialogProps> = (
                 sx={{ width: "30%" }}
                 label={"Display name"}
                 value={staff.displayName}
+                inputProps={{
+                  maxLength: 12,
+                }}
                 onChange={(e) =>
                   setStaff({ ...staff, displayName: e.target.value })
                 }
-                helperText={"*For display purposes only"}
+                helperText={"*For display purposes only.enter 12 characters "}
                 color={"success"}
               />
               <Stack direction={"column"} padding={5} spacing={2}>
@@ -202,6 +206,21 @@ const AddStaffDialog: React.FunctionComponent<AddStaffDialogProps> = (
                     setStaff({ ...staff, fullname: e.target.value })
                   }
                 />
+                <TextField
+                  id="outlined-select-role"
+                  select
+                  label="Select"
+                  value={role}
+                  onChange={handleChange}
+                  helperText="Please select staff role"
+                >
+                  {STAFF_ROLE.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
                 <TextField
                   label={"Contact #"}
                   color={"success"}

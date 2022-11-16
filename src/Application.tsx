@@ -14,6 +14,10 @@ import AccountPage from "./adminpanel/Account";
 import InventoryPage from "./adminpanel/Inventory";
 import DashBoardPage from "./adminpanel/Dashboard";
 import StaffPage from "./adminpanel/Staff";
+import StaffMainPage from "./staffpanel/StaffMain";
+import StaffNavBar from "./components/StaffNavBar";
+import StaffCashDrawerPage from "./staffpanel/StaffCashDrawer";
+import StaffAccountPage from "./staffpanel/StaffAccount";
 interface ApplicationProps {}
 
 const Application: React.FunctionComponent<ApplicationProps> = (props) => {
@@ -30,6 +34,41 @@ const Application: React.FunctionComponent<ApplicationProps> = (props) => {
                 </AuthRoute>
               }
             />
+
+            <Route path={"/cashier"}>
+              <Route
+                index
+                element={
+                  <StaffNavBar>
+                    <StaffMainPage />
+                  </StaffNavBar>
+                }
+              />
+              <Route
+                path="drawer"
+                element={
+                  <StaffNavBar>
+                    <StaffCashDrawerPage />
+                  </StaffNavBar>
+                }
+              />
+              <Route
+                path="home"
+                element={
+                  <StaffNavBar>
+                    <StaffMainPage />
+                  </StaffNavBar>
+                }
+              />
+              <Route
+                path="account"
+                element={
+                  <StaffNavBar>
+                    <StaffAccountPage />
+                  </StaffNavBar>
+                }
+              />
+            </Route>
             <Route
               path={"/"}
               element={

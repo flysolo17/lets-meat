@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
   Button,
+  Avatar,
 } from "@mui/material";
 import { Staff } from "../models/Staff";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -49,23 +50,12 @@ const StaffCardInfo: React.FunctionComponent<StaffCardInfoProps> = (props) => {
         onClick={handleClickOpen}
       >
         <Stack direction={"row"} spacing={2} sx={{ padding: 2 }}>
-          {staff.profile != "" ? (
-            <img
-              src={staff.profile}
-              alt="Product"
-              width={200}
-              height={200}
-              style={{ borderRadius: 10, backgroundColor: "#F9FFEF" }}
-            />
-          ) : (
-            <Box
-              sx={{
-                backgroundColor: "#D6F7A9",
-                width: 200,
-                height: 200,
-              }}
-            ></Box>
-          )}
+          <Avatar
+            src={staff.profile}
+            variant={"rounded"}
+            sx={{ width: 200, height: 200 }}
+            alt={"profile"}
+          />
 
           <Stack
             direction={"column"}
@@ -93,6 +83,17 @@ const StaffCardInfo: React.FunctionComponent<StaffCardInfoProps> = (props) => {
               sx={{
                 fontFamily: "Poppins",
                 fontWeight: "400",
+                fontStyle: "bold",
+                fontSize: 20,
+                color: "black",
+              }}
+            >
+              {staff.role}
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily: "Poppins",
+                fontWeight: "400",
                 fontStyle: "normal",
                 fontSize: 24,
                 color: "black",
@@ -115,9 +116,9 @@ const StaffCardInfo: React.FunctionComponent<StaffCardInfoProps> = (props) => {
           <Typography
             sx={{
               fontFamily: "Poppins",
-              fontWeight: "700",
-              fontStyle: "bold",
-              fontSize: 20,
+              fontWeight: "400",
+              fontStyle: "normal",
+              fontSize: 18,
               color: "white",
               textAlign: "Left",
             }}
@@ -127,9 +128,9 @@ const StaffCardInfo: React.FunctionComponent<StaffCardInfoProps> = (props) => {
           <Typography
             sx={{
               fontFamily: "Poppins",
-              fontWeight: "700",
-              fontStyle: "bold",
-              fontSize: 20,
+              fontWeight: "400",
+              fontStyle: "normal",
+              fontSize: 18,
               color: "white",
             }}
           >
@@ -250,6 +251,30 @@ const StaffCardInfo: React.FunctionComponent<StaffCardInfoProps> = (props) => {
                 }}
               >
                 {staff.fullname}
+              </Typography>
+
+              <Typography
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: "400",
+                  textColor: "black",
+                  fontStyle: "normal",
+                  fontSize: 18,
+                }}
+              >
+                Role
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: "700",
+                  textColor: "black",
+                  fontStyle: "normal",
+                  fontSize: 24,
+                  paddingLeft: 5,
+                }}
+              >
+                {staff.role}
               </Typography>
 
               <Typography
