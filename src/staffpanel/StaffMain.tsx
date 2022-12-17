@@ -14,7 +14,7 @@ import React, { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { useAuth } from "../auth/AuthContext";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { firestore } from "../config/config";
 import { PRODUCTS_TABLE, STAFF_ID, STAFF_TABLE } from "../utils/Constants";
 import ProductCard from "../components/ProductCard";
@@ -61,16 +61,19 @@ const StaffMainPage: React.FunctionComponent<StaffMainPageProps> = () => {
   }, []);
 
   useEffect(() => {
-    const ref = collection(firestore, PRODUCTS_TABLE);
-    const unsub = onSnapshot(ref, (snapshot) => {
-      let data: any[] = [];
-      snapshot.forEach((doc) => {
-        data.push({ ...doc.data(), id: doc.id });
+    if (currentUser != null) {
+      const ref = collection(firestore, PRODUCTS_TABLE);
+      const q = query(ref, where("userID", "==", currentUser.uid));
+      const unsub = onSnapshot(ref, (snapshot) => {
+        let data: any[] = [];
+        snapshot.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        setProduct(data);
+        console.log("product fetch successful!");
       });
-      setProduct(data);
-      console.log("product fetch successful!");
-    });
-    return () => unsub();
+      return () => unsub();
+    }
   }, []);
 
   return (

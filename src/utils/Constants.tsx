@@ -1,3 +1,5 @@
+import { Products } from "../models/Products";
+
 export const PRODUCT_STORAGE: string = "products";
 export const STAFF_STORAGE: string = "staff";
 export const PRODUCTS_TABLE = "Products";
@@ -17,4 +19,15 @@ export const posBackground = (isAvailable: boolean): string => {
     color = "#FF9D83";
   }
   return color;
+};
+
+export const getAllCategories = (productList: Products[]): string[] => {
+  const categories = [];
+  categories.push("Pork");
+  categories.push("Chicken");
+  categories.push("Beef");
+  categories.push("Steak");
+  categories.push("Frozen Goods");
+  categories.push("Others");
+  return categories;
 };

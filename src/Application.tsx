@@ -18,6 +18,7 @@ import StaffMainPage from "./staffpanel/StaffMain";
 import StaffNavBar from "./components/StaffNavBar";
 import StaffCashDrawerPage from "./staffpanel/StaffCashDrawer";
 import StaffAccountPage from "./staffpanel/StaffAccount";
+import StaffOrderPage from "./staffpanel/StaffOrder";
 interface ApplicationProps {}
 
 const Application: React.FunctionComponent<ApplicationProps> = (props) => {
@@ -65,6 +66,14 @@ const Application: React.FunctionComponent<ApplicationProps> = (props) => {
                 element={
                   <StaffNavBar>
                     <StaffAccountPage />
+                  </StaffNavBar>
+                }
+              />
+              <Route
+                path="order"
+                element={
+                  <StaffNavBar>
+                    <StaffOrderPage />
                   </StaffNavBar>
                 }
               />

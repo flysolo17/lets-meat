@@ -6,9 +6,34 @@ import React, { useEffect, useState } from "react";
 import Divider from "@mui/material/Divider";
 
 import InventoryTable from "./InventoryTable";
+import { useAuth } from "../auth/AuthContext";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { getAllCategories, PRODUCTS_TABLE } from "../utils/Constants";
+import { firestore } from "../config/config";
 interface InventoryPageProps {}
 
 const InventoryPage: React.FunctionComponent<InventoryPageProps> = () => {
+    const [product, setProduct] = useState<any[]>([]);
+    const { currentUser } = useAuth();
+    useEffect(() => {
+      if (currentUser != null) {
+        const PRODUCTS_REF = collection(firestore, PRODUCTS_TABLE);
+        const PRODUCTS_QUERY = query(
+          PRODUCTS_REF,
+          where("userID", "==", currentUser.uid),
+          orderBy("createdAt", "desc")
+        );
+        const unsub = onSnapshot(PRODUCTS_QUERY, (snapshot) => {
+          let data: any = [];
+          snapshot.forEach((doc) => {
+            data.push({ ...doc.data(), id: doc.id });
+          });
+          setProduct(data);
+          console.log(data);
+        });
+        return () => unsub();
+      }
+    }, []);
   return (
     <Box
       sx={{
@@ -38,10 +63,10 @@ const InventoryPage: React.FunctionComponent<InventoryPageProps> = () => {
           >
             Inventory
           </Typography>
-          <AddInventoryPage />
+          <AddInventoryPage categories={getAllCategories(product)}/>
         </Box>
         <Divider />
-        <InventoryTable />
+        <InventoryTable product={product}/>
       </Stack>
     </Box>
   );

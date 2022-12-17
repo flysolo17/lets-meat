@@ -43,6 +43,7 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
     quantity: product.quantity,
     description: product.description,
     details: product.details,
+    weight: product.weight,
   });
   const [loading, setLoading] = useState(false);
   const [forUpload, setForUpload] = useState("");
@@ -84,6 +85,7 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
             quantity: updatedProduct.quantity,
             description: updatedProduct.description,
             details: updatedProduct.details,
+            weight: updatedProduct.weight,
           })
             .then(() => {
               console.log(" item Updated!");
@@ -114,6 +116,7 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
         quantity: updatedProduct.quantity,
         description: updatedProduct.description,
         details: updatedProduct.details,
+        weight: updatedProduct.weight,
       })
         .then(() => {
           console.log("item updated!");
@@ -203,6 +206,21 @@ const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogProps> = (
                   setUpdatedProduct({
                     ...updatedProduct,
                     productName: e.target.value,
+                  })
+                }
+              />
+              <TextField
+                id="outlined-multiline-static"
+                label="Weight"
+                variant={"filled"}
+                value={updatedProduct.weight}
+                type={"number"}
+                fullWidth
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                onChange={(e) =>
+                  setUpdatedProduct({
+                    ...updatedProduct,
+                    weight: parseInt(e.target.value),
                   })
                 }
               />

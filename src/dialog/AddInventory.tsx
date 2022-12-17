@@ -31,6 +31,13 @@ import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Products } from "../models/Products";
 import { useAuth } from "../auth/AuthContext";
 import { v4 as uuidv4 } from "uuid";
+
+import dayjs, { Dayjs } from "dayjs";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { isHeritageClause } from "typescript";
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -40,14 +47,31 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface AddInventoryPageProps {}
+interface AddInventoryPageProps {
+  categories: string[];
+}
 
-const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
+const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = (
+  props
+) => {
+  const { categories } = props;
   const [open, setOpen] = useState(false);
   const { currentUser } = useAuth();
   const [image, setImage] = useState(null);
   const [forUpload, setForUpload] = useState("");
   const [loading, setLoading] = useState(false);
+  const [expiration, setExpiration] = React.useState<Dayjs | null>(
+    dayjs(new Date())
+  );
+  const handleChange = (newValue: Dayjs | null) => {
+    if (newValue != null) {
+      setProduct({
+        ...product,
+        expiration: newValue.toDate().getTime(),
+      });
+      setExpiration(newValue);
+    }
+  };
   const [product, setProduct] = useState<Products>({
     code: "",
     userID: currentUser.uid,
@@ -61,6 +85,9 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
     isAvailable: true,
     comments: [],
     createdAt: getTimestamp(),
+    expiration: 0,
+    category: "",
+    weight: 0,
   });
   const onImageChange = (event: any) => {
     setForUpload(event.target.files[0]);
@@ -90,7 +117,11 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
       isAvailable: true,
       comments: [],
       createdAt: getTimestamp(),
+      expiration: 0,
+      category: "",
+      weight: 0,
     });
+    setExpiration(dayjs(new Date()));
     setForUpload("");
     setImage(null);
     setOpen(false);
@@ -203,8 +234,8 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
         >
           <Paper
             sx={{
-              height: "80vh",
-              width: "70%",
+              height: "100%",
+              width: "100%",
               display: "flex",
             }}
             elevation={1}
@@ -212,7 +243,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
             <Stack
               direction={"column"}
               spacing={5}
-              sx={{ width: "40%", padding: 2 }}
+              sx={{ width: "30%", padding: 2 }}
             >
               <Typography
                 sx={{
@@ -254,7 +285,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
             <Stack
               direction={"column"}
               spacing={2}
-              sx={{ width: "60%", padding: 5 }}
+              sx={{ width: "70%", padding: 5 }}
             >
               <TextField
                 label={"Product Code"}
@@ -266,6 +297,7 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                   setProduct({ ...product, code: e.target.value })
                 }
               />
+
               <TextField
                 label={"Product name"}
                 variant={"filled"}
@@ -274,6 +306,50 @@ const AddInventoryPage: React.FunctionComponent<AddInventoryPageProps> = () => {
                   setProduct({ ...product, productName: e.target.value })
                 }
               />
+              <Stack direction={"row"} spacing={2} sx={{ width: "100%" }}>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Weight"
+                  variant={"filled"}
+                  value={product.weight}
+                  type={"number"}
+                  fullWidth
+                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                  onChange={(e) =>
+                    setProduct({ ...product, weight: parseInt(e.target.value) })
+                  }
+                />
+                <TextField
+                  id="outlined-select-currency-native"
+                  select
+                  label="Select Category"
+                  fullWidth
+                  onChange={(e) =>
+                    setProduct({ ...product, category: e.target.value })
+                  }
+                  SelectProps={{
+                    native: true,
+                  }}
+                  helperText="Please select product category"
+                >
+                  {categories.map((category, index) => (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </TextField>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Expiration Date"
+                    value={expiration}
+                    onChange={handleChange}
+                    renderInput={(params) => (
+                      <TextField {...params} variant={"filled"} fullWidth />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Stack>
+
               <TextField
                 id="outlined-multiline-static"
                 label="Description"

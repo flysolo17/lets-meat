@@ -14,7 +14,11 @@ export interface Products {
   isAvailable: boolean;
   comments: Comments[];
   createdAt: number;
+  expiration: number;
+  category: string;
+  weight: number;
 }
+
 
 export const classroomConveter = {
   toFirestore: (data: Products) => data,

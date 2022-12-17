@@ -21,6 +21,7 @@ import { Button, Stack } from "@mui/material";
 import DeleteProductDialog from "../dialog/DeleteProduct";
 import UpdateProductDialog from "../dialog/UpdateProduct";
 import ViewProductDialog from "../dialog/ViewProduct";
+import { Products } from "../models/Products";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,9 +29,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Poppins",
-    fontWeight: 700,
+    fontWeight: 400,
     fontStyle: "normal",
   },
 }));
@@ -45,36 +46,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-
-
-interface InventoryTableProps {}
+interface InventoryTableProps {
+  product: any[];
+}
 
 const InventoryTable: React.FunctionComponent<InventoryTableProps> = (
   props
 ) => {
-  const [product, setProduct] = useState<any[]>([]);
+  const { product } = props;
   const { currentUser } = useAuth();
-  useEffect(() => {
-    if (currentUser != null) {
-      const PRODUCTS_REF = collection(firestore, PRODUCTS_TABLE);
-      const PRODUCTS_QUERY = query(
-        PRODUCTS_REF,
-        where("userID", "==", currentUser.uid),
-        orderBy("createdAt", "desc")
-      );
-      const unsub = onSnapshot(PRODUCTS_QUERY, (snapshot) => {
-        let data: any = [];
-        snapshot.forEach((doc) => {
-          data.push({ ...doc.data(), id: doc.id });
-        });
-        setProduct(data);
-        console.log(data);
-      });
-      return () => unsub();
-    }
-  }, []);
-
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 800 }}>
       <Table sx={{ minWidth: 700 }} stickyHeader aria-label="Inventory table">
@@ -85,6 +65,9 @@ const InventoryTable: React.FunctionComponent<InventoryTableProps> = (
             <StyledTableCell align="right">Quantity</StyledTableCell>
             <StyledTableCell align="right">Cost</StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>
+            <StyledTableCell align="right">Category</StyledTableCell>
+            <StyledTableCell align="right">Weight</StyledTableCell>
+            <StyledTableCell align="right">Expiration</StyledTableCell>
             <StyledTableCell align="center">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -99,6 +82,12 @@ const InventoryTable: React.FunctionComponent<InventoryTableProps> = (
                 <StyledTableCell align="right">{row.quantity}</StyledTableCell>
                 <StyledTableCell align="right">{row.cost}</StyledTableCell>
                 <StyledTableCell align="right">{row.price}</StyledTableCell>
+                <StyledTableCell align="right">{row.category}</StyledTableCell>
+                <StyledTableCell align="right">{row.weight}</StyledTableCell>
+
+                <StyledTableCell align="right">
+                  {row.expiration}
+                </StyledTableCell>
                 <StyledTableCell align="right">
                   <Stack
                     direction={"row"}
@@ -121,7 +110,7 @@ const InventoryTable: React.FunctionComponent<InventoryTableProps> = (
             ))
           ) : (
             <StyledTableRow>
-              <StyledTableCell align="center" colSpan={5}>
+              <StyledTableCell align="center" colSpan={9}>
                 No products yet!
               </StyledTableCell>
             </StyledTableRow>
