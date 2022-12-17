@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.models.Products
+import com.ciejaycoding.letsmeat.utils.formatPrice
 
 class ProductsAdapter(private val context : Context, private val productList : List<Products>,val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
@@ -24,7 +25,7 @@ class ProductsAdapter(private val context : Context, private val productList : L
     override fun onBindViewHolder(holder: ProductsViewHolder, position: Int) {
         val products = productList[position]
         holder.textProductName.text = products.productName
-        holder.textPrice.text = "₱ ${products.price}"
+        holder.textPrice.text = formatPrice(products.price)
         if (products.images!!.isNotEmpty()) {
             holder.imageProduct.scaleType = ImageView.ScaleType.CENTER_CROP
             Glide.with(context).load(products.images).into(holder.imageProduct)

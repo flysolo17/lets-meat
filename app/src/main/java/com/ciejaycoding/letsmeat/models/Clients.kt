@@ -1,28 +1,46 @@
 package com.ciejaycoding.letsmeat.models
 
+import android.os.Parcel
+import android.os.Parcelable
+
 data class Clients(
     val id : String ? = null,
-    val profile : String? = null,
+    var profile : String? = null,
     val phone : String ? = null,
-    val fullname : String ? = null,
-    val addresses : Addresses ? = null,
-    val defaultAddress : Int ? = null,
-)
+    var fullname : String ? = null,
+    val addresses : List<Address> ? = null,
+    val defaultAddress : Int  = 0,
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.createTypedArrayList(Address),
+        parcel.readInt()
+    ) {
+    }
 
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(profile)
+        parcel.writeString(phone)
+        parcel.writeString(fullname)
+        parcel.writeTypedList(addresses)
+        parcel.writeInt(defaultAddress)
+    }
 
+    override fun describeContents(): Int {
+        return 0
+    }
 
-data class Addresses(
-    val contact: Contact? = null,
-    val location: Location ? = null,
-)
-data class Location(
-    val province : String? = null,
-    val city : String ? = null,
-    val barangay : String ? = null,
-    val landmark : String ? = null,
-)
+    companion object CREATOR : Parcelable.Creator<Clients> {
+        override fun createFromParcel(parcel: Parcel): Clients {
+            return Clients(parcel)
+        }
 
-data class Contact(
-    val person : String ? = null,
-    val number: String ? = null,
-)
+        override fun newArray(size: Int): Array<Clients?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

@@ -14,10 +14,11 @@
         app:shapeAppearance="@style/rounded"/>
     <TextView
         android:id="@+id/textSample"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="@string/sample" />
 <LinearLayout
     android:layout_width="match_parent"

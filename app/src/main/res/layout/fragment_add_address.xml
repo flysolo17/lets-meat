@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#F2F4F7"
+    tools:context=".view.address.AddAddressFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contact"
+        android:fontFamily="@font/poppins"
+        android:textSize="14sp"
+        android:padding="5dp"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/person_name"
+        android:id="@+id/inputName"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
+        android:autofillHints="false" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/contact"
+        android:id="@+id/inputContact"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/address"
+            android:fontFamily="@font/poppins"
+            android:textSize="14sp"
+            android:padding="5dp"
+            />
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/region_province_city_barangay"
+        android:inputType="textMultiLine"
+        android:id="@+id/inputRegion"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/postal_code"
+        android:inputType="number"
+        android:id="@+id/inputPostalCode"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/street_name_building_house_no"
+        android:inputType="textMultiLine"
+        android:id="@+id/inputStreet"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="use my current location"
+        android:drawableLeft="@drawable/ic_baseline_my_location_24"
+        android:layout_margin="5dp"
+        android:id="@+id/buttonMyLocation"
+        android:drawableTint="@color/purple_500"
+        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/buttonSubmit"
+        android:text="@string/submit"/>
+</LinearLayout>

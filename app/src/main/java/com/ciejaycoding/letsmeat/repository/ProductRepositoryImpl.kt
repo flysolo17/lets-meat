@@ -31,8 +31,6 @@ class ProductRepositoryImpl(private val firestore: FirebaseFirestore) : ProductR
                     result.invoke(UiState.Failed("Failed Fetching Products..."))
                 }
             }
-
-
     }
 
 

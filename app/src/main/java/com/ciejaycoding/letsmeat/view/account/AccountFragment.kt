@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.databinding.FragmentAccountBinding
-import com.ciejaycoding.letsmeat.databinding.FragmentCartBinding
+
 import com.ciejaycoding.letsmeat.models.Clients
 import com.ciejaycoding.letsmeat.utils.ProgressDialog
 import com.ciejaycoding.letsmeat.utils.UiState
 import com.ciejaycoding.letsmeat.viewmodel.AuthViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +29,7 @@ class AccountFragment : Fragment() {
     private val authViewModel : AuthViewModel by viewModels()
 
     private lateinit var loadingDialog: ProgressDialog
-
+    private lateinit var client: Clients
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,10 +43,40 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = ProgressDialog(view.context)
-        binding.buttonLogout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            detectUser(FirebaseAuth.getInstance().currentUser)
+        binding.buttonLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_account_to_loginFragment)
         }
+        binding.buttonPending.setOnClickListener {
+            val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(0)
+            findNavController().navigate(directions)
+        }
+        binding.buttonToShip.setOnClickListener {
+            val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(1)
+            findNavController().navigate(directions)
+        }
+        binding.buttonToRecieve.setOnClickListener {
+            val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(2)
+            findNavController().navigate(directions)
+        }
+        binding.buttonToRate.setOnClickListener {
+            val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(3)
+            findNavController().navigate(directions)
+        }
+        binding.buttonLogout.setOnClickListener {
+            MaterialAlertDialogBuilder(view.context)
+                .setTitle("Log out")
+                .setMessage("Are you sure you want to logged out? ")
+                .setPositiveButton("Yes") {dialog,_->
+                    FirebaseAuth.getInstance().signOut()
+                    detectUser(FirebaseAuth.getInstance().currentUser)
+                }
+                .setNegativeButton("Cancel") {dialog,_->
+                    dialog.dismiss()
+                }
+                .show()
+
+        }
+
         authViewModel.profile.observe(viewLifecycleOwner) {
             when(it){
                 is UiState.Failed -> {
@@ -55,10 +87,22 @@ class AccountFragment : Fragment() {
                     loadingDialog.showLoadingDialog("Fetching profile...")
                 }
                 is UiState.Success ->{
+                    client = it.data
                     loadingDialog.stopLoading()
                     displayViews(it.data)
                 }
             }
+        }
+        binding.buttonMyAddresses.setOnClickListener {
+            val action = AccountFragmentDirections.actionNavigationAccountToAddressFragment(client.addresses!!.toTypedArray(),
+                client.id!!,
+                client.defaultAddress,
+                )
+            findNavController().navigate(action)
+        }
+        binding.buttonEditProfile.setOnClickListener {
+            val  action = AccountFragmentDirections.actionNavigationAccountToUpdateAccount(client)
+            findNavController().navigate(action)
         }
     }
 
@@ -69,10 +113,9 @@ class AccountFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val user = FirebaseAuth.getInstance().currentUser
+        detectUser(user)
         user?.let {
-            detectUser(user)
             authViewModel.getProfile(user.uid)
-
         }
     }
     private fun displayViews(client: Clients) {

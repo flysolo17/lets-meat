@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:padding="10dp"
     android:orientation="vertical"
@@ -69,40 +70,62 @@
             android:text="Quantity"
             android:textColor="@color/black"
             android:textSize="14sp" />
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingHorizontal="10dp"
-            android:orientation="horizontal">
-            <ImageButton
+            android:elevation="0dp"
+            android:layout_margin="2dp"
+            app:strokeWidth="1dp">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_horizontal_rule_24"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_light"
-                android:text="0"
-                android:layout_margin="10dp"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:id="@+id/textQuantity"
-                android:textSize="14sp" />
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_baseline_add_24"/>
-        </LinearLayout>
+                android:paddingHorizontal="10dp"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/buttonMinus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_horizontal_rule_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="0"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:id="@+id/textQuantity"
+                    android:textSize="14sp" />
+                <ImageButton
+                    android:id="@+id/buttonAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_add_24"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <com.google.android.material.button.MaterialButton
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content"
-        android:text="@string/add_to_cart"/>
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:id="@+id/buttonAddToCart"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_cart"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:id="@+id/buttonBuyNow"
+            android:layout_height="wrap_content"
+            android:text="@string/buy_now"/>
+    </FrameLayout>
+
 
 </LinearLayout>

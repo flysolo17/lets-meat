@@ -90,5 +90,14 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+    fun hideNav() {
+        binding.bottomAppBar.performHide(true)
+        binding.bottomAppBar.hideOnScroll = false
+    }
+    fun showNav() {
+        binding.bottomAppBar.performShow(true)
+        binding.bottomAppBar.hideOnScroll = true
+    }
+
 
 }

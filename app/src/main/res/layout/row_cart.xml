@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageProduct"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/frozen" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="5dp"
+        android:layout_gravity="bottom">
+        <TextView
+            android:id="@+id/textProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="@string/sample" />
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="match_parent"
+            android:textColor="@color/purple_700"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Sample" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="0dp"
+                android:layout_margin="5dp"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingHorizontal="15dp"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:id="@+id/buttonMinus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_baseline_horizontal_rule_24"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_light"
+                        android:text="0"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:id="@+id/textQuantity"
+                        android:textSize="14sp" />
+                    <ImageButton
+                        android:id="@+id/buttonAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_baseline_add_24"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:text="0"
+                android:layout_gravity="bottom"
+                android:gravity="end"
+                android:textColor="@color/purple_700"
+                android:id="@+id/textStocks"
+                android:textSize="14sp" />
+        </LinearLayout>
+</LinearLayout>

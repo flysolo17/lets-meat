@@ -1,0 +1,81 @@
+package com.ciejaycoding.letsmeat.view.cart
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.ciejaycoding.letsmeat.R
+import com.ciejaycoding.letsmeat.models.Cart
+import com.ciejaycoding.letsmeat.models.CartAndProduct
+import com.ciejaycoding.letsmeat.models.Products
+import com.ciejaycoding.letsmeat.utils.PRODUCTS_TABLE
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.firebase.firestore.FirebaseFirestore
+
+class CartAdapter(val context: Context, private val cartList: List<Cart>,val cartClickListener: CartClickListener) : RecyclerView.Adapter<CartAdapter.CartAdapterViewHolder>() {
+    interface CartClickListener {
+        fun addQuantity(cartAndProduct: CartAndProduct)
+        fun decreaseQuantity(cartAndProduct: CartAndProduct)
+        fun onCartClick(products: Products)
+        fun checkBoxIsClick(cartAndProduct: CartAndProduct,isCheck: Boolean)
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartAdapterViewHolder {
+        val view : View = LayoutInflater.from(context).inflate(R.layout.row_cart,parent,false)
+        return CartAdapterViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: CartAdapterViewHolder, position: Int) {
+        val cart = cartList[position]
+        cart.productID?.let { holder.getProduct(it) }
+        holder.quantity.text = cart.quantity.toString()
+        holder.buttonAdd.setOnClickListener {
+            cartClickListener.addQuantity(CartAndProduct(cart = cart, products = holder.product))
+        }
+        holder.buttonMinus.setOnClickListener {
+            cartClickListener.decreaseQuantity(CartAndProduct(cart = cart, products = holder.product))
+        }
+        holder.itemView.setOnClickListener {
+            cartClickListener.onCartClick(holder.product!!)
+        }
+        holder.checkBox.setOnClickListener {
+            cartClickListener.checkBoxIsClick(cartAndProduct = CartAndProduct(cart = cart, products = holder.product),holder.checkBox.isChecked)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return cartList.size
+    }
+    class CartAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val imageProduct : ImageView = itemView.findViewById(R.id.imageProduct)
+        private val productName : TextView = itemView.findViewById(R.id.textProductName)
+        private val productPrice : TextView = itemView.findViewById(R.id.textPrice)
+        private val productStocks : TextView = itemView.findViewById(R.id.textStocks)
+        val quantity : TextView = itemView.findViewById(R.id.textQuantity)
+        val buttonMinus : ImageButton = itemView.findViewById(R.id.buttonMinus)
+        val buttonAdd : ImageButton = itemView.findViewById(R.id.buttonAdd)
+        val checkBox: CheckBox = itemView.findViewById(R.id.checkbox)
+        var product : Products? = null
+        private val firestore = FirebaseFirestore.getInstance()
+        fun getProduct(productID : String) {
+            firestore.collection(PRODUCTS_TABLE).document(productID)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        product = task.result.toObject(Products::class.java)
+                        if (product != null) {
+                            product!!.images?.let {
+                                Glide.with(itemView.context).load(it).into(imageProduct)
+                            }
+                            productStocks.text = product!!.quantity.toString() + " stocks left"
+                            productName.text = product!!.productName.toString()
+                            productPrice.text = "₱ ${product!!.price}"
+                        }
+                    }
+                }
+        }
+    }
+
+}

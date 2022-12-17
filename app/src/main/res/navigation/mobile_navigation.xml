@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_navigation_cart_to_loginFragment2"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_navigation_cart_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_messages"
@@ -33,7 +36,20 @@
         android:id="@+id/navigation_account"
         android:name="com.ciejaycoding.letsmeat.view.account.AccountFragment"
         android:label="Account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_updateAccount"
+            app:destination="@id/updateAccount" />
+        <action
+            android:id="@+id/action_navigation_account_to_purchasesFragment"
+            app:destination="@id/purchasesFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewProduct"
         android:name="com.ciejaycoding.letsmeat.view.product.ViewProduct"
@@ -43,19 +59,95 @@
         <argument
             android:name="products"
             app:argType="com.ciejaycoding.letsmeat.models.Products" />
+        <action
+            android:id="@+id/action_viewProduct_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_viewProduct_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.ciejaycoding.letsmeat.view.auth.LoginFragment"
-        android:label=""
+        android:label="Login with mobile"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_loginFragment_to_otpViewFragment"
+            app:destination="@id/otpViewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.ciejaycoding.letsmeat.view.auth.SignUpFragment"
-        android:label=""
-        tools:layout="@layout/fragment_sign_up" />
+        android:id="@+id/addressFragment"
+        android:name="com.ciejaycoding.letsmeat.view.address.AddressFragment"
+        android:label="My Addresses"
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_addressFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+        <argument
+            android:name="addresses"
+            app:argType="com.ciejaycoding.letsmeat.models.Address[]" />
+        <argument
+            android:name="defaultAddress"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="uid"
+            app:argType="string" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.ciejaycoding.letsmeat.view.address.AddAddressFragment"
+        android:label="New Address"
+        tools:layout="@layout/fragment_add_address">
+
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.ciejaycoding.letsmeat.view.checkout.CheckOutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_check_out" >
+        <argument
+            android:name="cartAndProduct"
+            app:argType="com.ciejaycoding.letsmeat.models.CartAndProduct[]" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpViewFragment"
+        android:name="com.ciejaycoding.letsmeat.view.auth.OtpViewFragment"
+        android:label="OTP Verification"
+        tools:layout="@layout/fragment_otp_view" >
+        <argument
+            android:name="phone"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateAccount"
+        android:name="com.ciejaycoding.letsmeat.view.account.UpdateAccount"
+        android:label="Edit"
+        tools:layout="@layout/fragment_update_account" >
+        <argument
+            android:name="client"
+            app:nullable="true"
+            app:argType="com.ciejaycoding.letsmeat.models.Clients" />
+    </fragment>
+    <fragment
+        android:id="@+id/purchasesFragment"
+        android:name="com.ciejaycoding.letsmeat.view.orders.PurchasesFragment"
+        android:label="Purchases"
+        tools:layout="@layout/fragment_purchases" >
+        <argument
+            android:name="tab_position"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

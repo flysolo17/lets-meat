@@ -3,22 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.account.AccountFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layoutAccount"
         android:gravity="center"
         android:orientation="vertical">
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageProfile"
-            android:background="@drawable/ic_baseline_account_circle_24"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_margin="10dp"
-            app:shapeAppearance="@style/rounded"
-            />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_person_24"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,36 +40,222 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:text="+639334245565"
+            android:layout_margin="5dp"
             android:id="@+id/textPhoneNumber"
             android:textColor="#003C51"
             android:textSize="16sp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonLogout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:text="Logout"
-                app:backgroundTint="#F44336" />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonEditProfile"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:text="@string/edit"
-                app:backgroundTint="#338213" />
-        </LinearLayout>
-
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_purchases"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="@string/my_purchases"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:text="@string/view_purchase_history"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_light"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:clickable="true"
+                    android:id="@+id/buttonPending"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_pending"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pending"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/poppins"/>
+                </LinearLayout>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_height="match_parent"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/buttonToShip"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_margin="10dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_ships"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:text="To Ship" />
+                </LinearLayout>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_height="match_parent"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:id="@+id/buttonToRecieve"
+                    android:orientation="vertical"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_recieve" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="To Recieve"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/poppins"/>
+                </LinearLayout>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_height="match_parent"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:id="@+id/buttonToRate"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/ic_rate"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="To Rate"
+                        android:textSize="10sp"
+
+                        android:gravity="center"
+                        android:fontFamily="@font/poppins"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                android:id="@+id/buttonMyAddresses"
+                android:text="@string/my_addresses"
+                android:drawableLeft="@drawable/ic_anddress"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_light"
+                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                android:id="@+id/buttonEditProfile"
+                android:text="@string/account_settings"
+                android:drawableLeft="@drawable/ic_baseline_person_24"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_light"
+                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            <Button
+                android:id="@+id/buttonLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/ic_logout"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                android:text="Logout"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_light"
+                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+        </LinearLayout>
     </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

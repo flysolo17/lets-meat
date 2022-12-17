@@ -1,3 +1,4 @@
+/*
 package com.ciejaycoding.letsmeat.view.auth
 
 import android.os.Bundle
@@ -66,10 +67,9 @@ class SignUpFragment : Fragment() {
                 is UiState.Failed -> {
                     Toast.makeText(view.context,it.message,Toast.LENGTH_SHORT).show()
                 }
-                UiState.Loading -> {
-                    verificationCodeCountDown()
-                }
+
                 is UiState.Success -> {
+                    verificationCodeCountDown()
                     code = it.data
                 }
             }
@@ -85,6 +85,7 @@ class SignUpFragment : Fragment() {
                 }
                 is UiState.Success -> {
                     loadingDialog.stopLoading()
+
                     Toast.makeText(view.context,it.data,Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
@@ -93,22 +94,16 @@ class SignUpFragment : Fragment() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     private fun verificationCodeCountDown() {
-        object : CountDownTimer(120000, 1000) {
+        object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.buttonSend.text = "" + millisUntilFinished / 1000
                 binding.buttonSend.isEnabled = false
             }
-
             override fun onFinish() {
                 binding.buttonSend.text = "Resend"
                 binding.buttonSend.isEnabled = true
             }
         }.start()
     }
-}
+}*/
