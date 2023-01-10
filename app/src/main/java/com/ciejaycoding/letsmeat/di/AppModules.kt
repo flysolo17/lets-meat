@@ -9,6 +9,8 @@ import com.ciejaycoding.letsmeat.repository.cart.CartRepository
 import com.ciejaycoding.letsmeat.repository.cart.CartRepositoryImpl
 import com.ciejaycoding.letsmeat.repository.purchases.PurchasesRepository
 import com.ciejaycoding.letsmeat.repository.purchases.PurchasesRepositoryImpl
+import com.ciejaycoding.letsmeat.repository.transaction.TransactionRepository
+import com.ciejaycoding.letsmeat.repository.transaction.TransactionRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -46,5 +48,10 @@ object AppModules {
     @Provides
     fun providePurchasesRepository() : PurchasesRepository {
         return PurchasesRepositoryImpl(FirebaseFirestore.getInstance())
+    }
+    @Singleton
+    @Provides
+    fun provideTransactionRepository() : TransactionRepository {
+        return TransactionRepositoryImpl(FirebaseFirestore.getInstance())
     }
 }

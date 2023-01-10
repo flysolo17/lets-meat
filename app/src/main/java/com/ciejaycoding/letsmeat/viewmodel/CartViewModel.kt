@@ -74,4 +74,9 @@ class CartViewModel @Inject constructor(private val  cartRepository: CartReposit
             }
         }
     }
+    fun removeFromCart(uid : String , cartID : String) {
+        viewModelScope.launch {
+            cartRepository.removeToCart(uid, cartID)
+        }
+    }
 }

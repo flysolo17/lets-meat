@@ -14,12 +14,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ciejaycoding.letsmeat.databinding.FragmentPurchasesBinding
 import com.ciejaycoding.letsmeat.models.Order
 import com.ciejaycoding.letsmeat.models.OrderStatus
+import com.ciejaycoding.letsmeat.models.Transaction
 import com.ciejaycoding.letsmeat.utils.ProgressDialog
 import com.ciejaycoding.letsmeat.utils.UiState
 import com.ciejaycoding.letsmeat.viewmodel.PurchasesViewModel
+import com.ciejaycoding.letsmeat.viewmodel.TransactionViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.common.collect.Iterables.addAll
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +32,9 @@ class PurchasesFragment : Fragment() {
     private lateinit var binding : FragmentPurchasesBinding
     private val args : PurchasesFragmentArgs by navArgs()
     private val purchasesViewModel : PurchasesViewModel by viewModels()
+    private val transactionViewModel : TransactionViewModel by viewModels()
     private var orderList : ArrayList<Order> = arrayListOf()
+    private var transactionList : ArrayList<Transaction> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,31 +63,53 @@ class PurchasesFragment : Fragment() {
                 is UiState.Success -> {
                     progressDialog.stopLoading()
                     orderList.addAll(it.data)
-                    if (orderList.isNotEmpty()) {
-                        val indicator = PurchasesTabAdapter(this,OrderStatus.values(),orderList)
-                        TabLayoutMediator(binding.tabLayout,binding.pager2.apply { adapter = indicator },true) {tab,position ->
-                            tab.text =OrderStatus.values()[position].toString().replace("_"," ")
-                        }.attach()
-                        binding.tabLayout.getTabAt(args.tabPosition)!!.select()
-                    }
+                    transactionViewModel.getTransactions(currentUser!!.uid)
+                }
+            }
+        }
+        transactionViewModel.transactions.observe(viewLifecycleOwner) {
+            when(it) {
+                is UiState.Failed -> {
+                    progressDialog.stopLoading()
+                    Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
+
+                }
+                UiState.Loading -> {
+                    progressDialog.showLoadingDialog("Getting all transactions....")
+                }
+                is UiState.Success -> {
+                    progressDialog.stopLoading()
+                    Toast.makeText(binding.root.context,"Success!", Toast.LENGTH_SHORT).show()
+                    transactionList.addAll(it.data)
+                    attachTabs()
                 }
             }
         }
 
 
     }
-    class PurchasesTabAdapter(val fragment: Fragment, private val statusList : Array<OrderStatus>, val orders : ArrayList<Order>) : FragmentStateAdapter(fragment) {
+    private fun attachTabs() {
+        if (orderList.isNotEmpty() || transactionList.isNotEmpty()) {
+            val indicator = PurchasesTabAdapter(this,OrderStatus.values(),orderList,transactionList)
+            TabLayoutMediator(binding.tabLayout,binding.pager2.apply { adapter = indicator },true) {tab,position ->
+                tab.text =OrderStatus.values()[position].toString().replace("_"," ")
+            }.attach()
+            binding.tabLayout.getTabAt(args.tabPosition)!!.select()
+        }
+    }
+    class PurchasesTabAdapter(val fragment: Fragment, private val statusList : Array<OrderStatus>, val orders : ArrayList<Order>,
+                              private val transactions : ArrayList<Transaction>) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int {
             return statusList.size
         }
-
         override fun createFragment(position: Int): Fragment {
             val fragment = OrderStatusFragment()
-            val array = arrayListOf<Order>()
-            array.addAll(orders.filter { it.status == statusList[position]} )
+
+
             fragment.arguments = Bundle().apply {
                 putInt(POSITION,position)
-                putParcelableArrayList("orders",array)
+                putParcelableArrayList("orders",orders)
+                putParcelableArrayList("transactions",transactions)
             }
             return fragment
         }
@@ -90,4 +117,5 @@ class PurchasesFragment : Fragment() {
     companion object {
         const val POSITION = "position"
     }
+
 }

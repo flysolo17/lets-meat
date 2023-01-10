@@ -9,6 +9,7 @@ class OrderItems(
     val name : String  ? = null,
     val quantity : Int  ? = null,
     val originalPrice : Float ? = null,
+    val cost : Float ? = null,
     val weight : Int ? = null
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
@@ -16,6 +17,7 @@ class OrderItems(
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Float::class.java.classLoader) as? Float,
         parcel.readValue(Float::class.java.classLoader) as? Float,
         parcel.readValue(Int::class.java.classLoader) as? Int
     ) {
@@ -27,6 +29,7 @@ class OrderItems(
         parcel.writeString(name)
         parcel.writeValue(quantity)
         parcel.writeValue(originalPrice)
+        parcel.writeValue(cost)
         parcel.writeValue(weight)
     }
 

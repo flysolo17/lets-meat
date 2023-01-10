@@ -5,4 +5,5 @@ import com.ciejaycoding.letsmeat.utils.UiState
 
 interface PurchasesRepository {
     suspend fun getAllPendingOrders(uid : String,result: (UiState<List<Order>>) -> Unit)
+    suspend fun deleteOrder(id : String,result: (UiState<String>) -> Unit)
 }

@@ -1,5 +1,6 @@
 package com.ciejaycoding.letsmeat.models
 
+
 enum class OrderStatus {
-    PENDING , TO_SHIP , TO_RECEIVE, TO_RATE , COMPLETED
+    PENDING ,TO_PACKED, TO_SHIP , TO_RECEIVE ,COMPLETED,DECLINED,CANCELED
 }

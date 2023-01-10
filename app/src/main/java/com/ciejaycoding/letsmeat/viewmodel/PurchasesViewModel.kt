@@ -15,10 +15,19 @@ import javax.inject.Inject
 class PurchasesViewModel @Inject constructor(private val purchasesRepository: PurchasesRepository) : ViewModel() {
     private val _orders  = MutableLiveData<UiState<List<Order>>>()
     val orders : LiveData<UiState<List<Order>>> get() = _orders
+    private val _deleteOrder  = MutableLiveData<UiState<String>>()
+    val deleteOrder : LiveData<UiState<String>> get() = _deleteOrder
     fun getAllPendingOrders(uid : String) {
         viewModelScope.launch {
             purchasesRepository.getAllPendingOrders(uid) {
                 _orders.value = it
+            }
+        }
+    }
+    fun deleteOrder(id : String) {
+        viewModelScope.launch {
+            purchasesRepository.deleteOrder(id)  {
+                _deleteOrder.value = it
             }
         }
     }

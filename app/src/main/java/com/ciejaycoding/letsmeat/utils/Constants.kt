@@ -14,6 +14,7 @@ const val CLIENTS_TABLE = "Clients"
 const val CLIENTS_CART = "Cart"
 const val ORDER_TABLE = "Orders"
 const val PROFILE_STORAGE = "profiles"
+const val TRANSACTION_TABLE = "Transactions"
 fun computePrice(cartAndProduct: CartAndProduct) : Float {
     return cartAndProduct.cart!!.quantity * cartAndProduct.products!!.price
 }

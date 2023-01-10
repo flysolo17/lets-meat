@@ -17,28 +17,30 @@ import com.ciejaycoding.letsmeat.models.OrderItems
 import com.ciejaycoding.letsmeat.models.OrderStatus
 import com.ciejaycoding.letsmeat.utils.*
 
-class PurchasesAdapter(val context: Context,val orderList: List<Order>)  : RecyclerView.Adapter<PurchasesAdapter.PurchasesViewHolder>(){
+class PurchasesAdapter(val context: Context,val orderList: List<Order>,val fragmentPosition : Int,val orderClickListener: OrderClickListener)  : RecyclerView.Adapter<PurchasesAdapter.PurchasesViewHolder>(){
 
-
+    interface OrderClickListener {
+        fun cancelOrder(position: Int)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PurchasesViewHolder {
         val view : View = LayoutInflater.from(context).inflate(R.layout.row_order,parent,false)
         return PurchasesViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PurchasesViewHolder, position: Int) {
-        if (orderList[position].status == OrderStatus.PENDING) {
-            holder.buttonCancel.visibility = View.VISIBLE
-            holder.buttonAccepted.visibility = View.GONE
-        } else {
-            holder.buttonCancel.visibility = View.GONE
-            holder.buttonAccepted.visibility = View.VISIBLE
-        }
-        holder.textStatus.text = orderList[position].status.toString().replace("_"," ")
         orderList[position].items?.map {
             holder.displayItems(it)
         }
         holder.textOrderTotal.text = formatPrice(orderTotal(orderList[position]).toFloat())
         holder.textItemTotal.text = countOrder(orderList[position])
+        if(fragmentPosition == 0) {
+            holder.buttonCancel.visibility = View.VISIBLE
+        } else {
+            holder.buttonCancel.visibility = View.GONE
+        }
+        holder.buttonCancel.setOnClickListener {
+            orderClickListener.cancelOrder(position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -49,10 +51,9 @@ class PurchasesAdapter(val context: Context,val orderList: List<Order>)  : Recyc
         val textStatus: TextView = itemView.findViewById(R.id.textStatus)
         val layoutItems: LinearLayout = itemView.findViewById(R.id.layoutItems)
         val buttonCancel = itemView.findViewById<Button>(R.id.buttonCancel)
-        val buttonAccepted = itemView.findViewById<Button>(R.id.buttonAccepted)
         val textItemTotal : TextView = itemView.findViewById(R.id.itemTotal)
         val textOrderTotal : TextView = itemView.findViewById(R.id.textOrderTotal)
-        
+
         fun displayItems(items : OrderItems) {
             val view : View = LayoutInflater.from(itemView.context).inflate(R.layout.layout_checkout,layoutItems,false)
             view.findViewById<TextView>(R.id.itemName).text = items.name

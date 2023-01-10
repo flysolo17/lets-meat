@@ -30,6 +30,16 @@ class CartRepositoryImpl(private val firestore: FirebaseFirestore) : CartReposit
             }
     }
 
+    override suspend fun removeToCart(
+        uid: String,
+        cartID: String,
+    ) {
+        firestore.collection(CLIENTS_TABLE).document(uid)
+            .collection(CLIENTS_CART)
+            .document(cartID)
+            .delete()
+    }
+
     override  fun getAllCart(uid: String ,result: (UiState<List<Cart>>) -> Unit){
       /*  val query: Query = firestore.collection(CLIENTS_TABLE).document(uid)
             .collection(CLIENTS_CART)
@@ -102,8 +112,10 @@ class CartRepositoryImpl(private val firestore: FirebaseFirestore) : CartReposit
 
     override fun checkOut(order: Order, result: (UiState<String>) -> Unit) {
         result.invoke(UiState.Loading)
+        order.id = firestore.collection("Orders").document().id
         firestore.collection(ORDER_TABLE)
-            .add(order).addOnCompleteListener {
+            .document(order.id!!)
+            .set(order).addOnCompleteListener {
                 if (it.isSuccessful) {
                     result.invoke(UiState.Success("Transaction Success!"))
                 } else {

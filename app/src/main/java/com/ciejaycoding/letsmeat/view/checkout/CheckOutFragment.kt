@@ -102,31 +102,39 @@ class CheckOutFragment : Fragment() {
             }
         }
         binding.buttonCheckOutOrder.setOnClickListener {
-
             val message = binding.inputMessage.text.toString()
             if (clients!!.addresses?.get(clients!!.defaultAddress) == null) {
                 Toast.makeText(view.context,"Please select address!",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            clients?.let {
-                val items = args.cartAndProduct.map {item -> OrderItems(
+            clients?.let { client ->
+                val items = args.cartAndProduct.map { item -> OrderItems(
                     item.products?.code!!,
                     item.products.images!!,
                     item.products.productName!!,
                     item.cart!!.quantity,
                     item.products.price,
-                item.products.weight) }.toList()
+                    item.products.cost,
+                    item.products.weight)
+                }.toList()
 
                 val order = Order(
-                    clients!!.id,
+                    "",
+                    client.id,
                     generateOrderNumber(),
-                    address = clients!!.addresses?.get(clients!!.defaultAddress),
+                    address = client.addresses?.get(client.defaultAddress),
                     items = items,
                     message = message,
-                    OrderStatus.PENDING,
                     date = System.currentTimeMillis()
                 )
-                cartViewModel.checkoutOrder(order = order)
+                cartViewModel.checkoutOrder(order = order).also {
+                    cartAndProduct.map {  cart->
+                        cart.cart?.let {
+                            cartViewModel.removeFromCart(order.clientID!!,it.productID!!)
+                        }
+                    }
+
+                }
 
             }
 

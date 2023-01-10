@@ -1,6 +1,7 @@
 package com.ciejaycoding.letsmeat.repository.purchases
 
 import com.ciejaycoding.letsmeat.models.Order
+import com.ciejaycoding.letsmeat.utils.ORDER_TABLE
 import com.ciejaycoding.letsmeat.utils.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -23,6 +24,20 @@ class PurchasesRepositoryImpl(val firestore: FirebaseFirestore) : PurchasesRepos
                     result.invoke(UiState.Success(orderList))
                 } else {
                     result.invoke(UiState.Failed("Failed Fetching order..."))
+                }
+            }
+    }
+
+    override suspend fun deleteOrder(id: String,result: (UiState<String>) -> Unit) {
+        result.invoke(UiState.Loading)
+        firestore.collection(ORDER_TABLE)
+            .document(id)
+            .delete()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    result.invoke(UiState.Success("Order cancelled!"))
+                } else {
+                    result.invoke(UiState.Failed("Order not deleted!"))
                 }
             }
     }

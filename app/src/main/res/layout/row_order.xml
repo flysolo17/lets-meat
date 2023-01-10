@@ -87,16 +87,6 @@
             android:id="@+id/buttonCancel"
             android:textAllCaps="false"
             android:backgroundTint="#D32F2F"/>
-        <Button
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/order_accepted"
-            android:id="@+id/buttonAccepted"
-            android:clickable="false"
-
-            android:textAllCaps="false"
-            />
     </FrameLayout>
 
 
