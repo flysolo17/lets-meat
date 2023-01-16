@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController : NavController
     private lateinit var actionBar: ActionBar
@@ -40,10 +39,7 @@ class MainActivity : AppCompatActivity() {
         actionBar.elevation = 0f
         val colorDrawable = ColorDrawable(Color.parseColor("#FFFFFFFF"))
         actionBar.setBackgroundDrawable(colorDrawable)
-
         val navView: BottomNavigationView = binding.navView
-
-
         navController = findNavController(R.id.nav_host_fragment_container)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -51,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_home,
                 R.id.navigation_cart,
-                R.id.navigation_messages,
                 R.id.navigation_account
             )
         )
@@ -63,9 +58,6 @@ class MainActivity : AppCompatActivity() {
                     showBottomNav()
                 }
                 R.id.navigation_cart -> {
-                    showBottomNav()
-                }
-                R.id.navigation_messages -> {
                     showBottomNav()
                 }
                 R.id.navigation_account -> {
@@ -98,6 +90,4 @@ class MainActivity : AppCompatActivity() {
         binding.bottomAppBar.performShow(true)
         binding.bottomAppBar.hideOnScroll = true
     }
-
-
 }

@@ -45,7 +45,7 @@ class OtpViewFragment : Fragment() {
 
         binding.buttonConfirm.setOnClickListener {
             val input = binding.inputPinView.text.toString()
-            if (input.isEmpty() && input.length == 6) {
+            if (input.isNotEmpty() && input.length == 6) {
                 authViewModel.verifyOtp(authModel.code!!, input)
                 return@setOnClickListener
             }

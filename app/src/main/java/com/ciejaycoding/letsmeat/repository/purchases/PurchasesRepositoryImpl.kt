@@ -1,10 +1,11 @@
 package com.ciejaycoding.letsmeat.repository.purchases
 
+import com.ciejaycoding.letsmeat.models.Comments
 import com.ciejaycoding.letsmeat.models.Order
 import com.ciejaycoding.letsmeat.utils.ORDER_TABLE
+import com.ciejaycoding.letsmeat.utils.PRODUCTS_TABLE
 import com.ciejaycoding.letsmeat.utils.UiState
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 
 class PurchasesRepositoryImpl(val firestore: FirebaseFirestore) : PurchasesRepository {
     private val orderList : MutableList<Order> = mutableListOf()
@@ -41,4 +42,6 @@ class PurchasesRepositoryImpl(val firestore: FirebaseFirestore) : PurchasesRepos
                 }
             }
     }
+
+
 }

@@ -13,8 +13,6 @@ import com.ciejaycoding.letsmeat.models.CartAndProduct
 import com.ciejaycoding.letsmeat.models.Products
 import com.ciejaycoding.letsmeat.utils.PRODUCTS_TABLE
 import com.ciejaycoding.letsmeat.utils.formatPrice
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 
 class CartAdapter(val context: Context, private val cartList: List<Cart>, private val cartClickListener: CartClickListener) :

@@ -72,5 +72,22 @@
     <string name="cancel">Cancel</string>
     <string name="order_accepted">ORDER ACCEPTED</string>
     <string name="buy_now">Buy Now</string>
+    <string name="order">Order #:</string>
+    <string name="nancayasan_urdaneta_pangasinan">Nancayasan, Urdaneta Pangasinan</string>
+    <string name="_12_apr">12 apr</string>
+    <string name="_08_17">08:17</string>
+    <string name="details">details</string>
+    <string name="status">STATUS</string>
+    <string name="reciever">Reciever:</string>
+    <string name="rate">Rate</string>
+    <string name="description">Description</string>
+    <string name="to_rate">To Rate</string>
+    <string name="logout">Logout</string>
+    <string name="subtotal_without_tax">Subtotal without tax</string>
+    <string name="vat">VAT</string>
+    <string name="comment">Comment</string>
+    <string name="rate_your_order">Rate your order!</string>
+    <string name="messagessss">A paragraph (from Ancient Greek παράγραφος (parágraphos) \'to write beside\') is a self-contained unit of discourse in writing dealing with a particular point or idea. Though not required by the orthographic conventions of any language with a writing system, paragraphs are a conventional means of organizing extended segments of prose.</string>
+    <string name="_1_54_am">1:54 AM</string>
 
 </resources>

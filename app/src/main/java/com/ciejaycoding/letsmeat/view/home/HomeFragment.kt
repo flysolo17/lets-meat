@@ -15,6 +15,7 @@ import com.ciejaycoding.letsmeat.utils.ProgressDialog
 import com.ciejaycoding.letsmeat.utils.UiState
 import com.ciejaycoding.letsmeat.view.home.indicators.IndicatorAdapter
 import com.ciejaycoding.letsmeat.viewmodel.ProductsViewModel
+import com.ciejaycoding.letsmeat.viewmodel.TransactionViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,11 +24,11 @@ class HomeFragment : Fragment(){
     private lateinit var binding : FragmentHomeBinding
 
     private val productsViewModel : ProductsViewModel by  viewModels()
+    private val transactionViewModel : TransactionViewModel by  viewModels()
     private lateinit var productsAdapter: ProductsAdapter
-
-
     private lateinit var indicatorAdapter: IndicatorAdapter
     private lateinit var productList : ArrayList<Products>
+    private lateinit var progressDialog : ProgressDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +40,7 @@ class HomeFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val progressDialog = ProgressDialog(view.context)
+        progressDialog = ProgressDialog(view.context)
         activity?.actionBar?.hide()
         productList = arrayListOf()
         productsViewModel.getAllProducts()
@@ -54,7 +55,6 @@ class HomeFragment : Fragment(){
                 }
                 is UiState.Success -> {
                     progressDialog.stopLoading()
-
                     productList.addAll(state.data)
                 }
             }
@@ -67,8 +67,5 @@ class HomeFragment : Fragment(){
             }.attach()
         }
 
-
     }
-
-
 }

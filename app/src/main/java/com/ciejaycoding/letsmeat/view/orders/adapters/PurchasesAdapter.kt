@@ -1,4 +1,4 @@
-package com.ciejaycoding.letsmeat.view.orders
+package com.ciejaycoding.letsmeat.view.orders.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,16 +11,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
-import com.ciejaycoding.letsmeat.models.CartAndProduct
 import com.ciejaycoding.letsmeat.models.Order
 import com.ciejaycoding.letsmeat.models.OrderItems
-import com.ciejaycoding.letsmeat.models.OrderStatus
 import com.ciejaycoding.letsmeat.utils.*
 
 class PurchasesAdapter(val context: Context,val orderList: List<Order>,val fragmentPosition : Int,val orderClickListener: OrderClickListener)  : RecyclerView.Adapter<PurchasesAdapter.PurchasesViewHolder>(){
 
     interface OrderClickListener {
         fun cancelOrder(position: Int)
+
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PurchasesViewHolder {
         val view : View = LayoutInflater.from(context).inflate(R.layout.row_order,parent,false)

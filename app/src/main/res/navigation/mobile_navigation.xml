@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_navigation_account_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_rateFragment"
+            app:destination="@id/rateFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewProduct"
@@ -149,5 +152,24 @@
             android:name="tab_position"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_purchasesFragment_to_viewTransactionFragment"
+            app:destination="@id/viewTransactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewTransactionFragment"
+        android:name="com.ciejaycoding.letsmeat.view.orders.ViewTransactionFragment"
+        android:label="Transactions"
+        tools:layout="@layout/fragment_view_transaction" >
+        <argument
+            android:name="transactionID"
+            android:defaultValue="null" />
+    </fragment>
+    <fragment
+        android:id="@+id/rateFragment"
+        android:name="com.ciejaycoding.letsmeat.view.rating.RateFragment"
+        android:label="To Rate"
+        tools:layout="@layout/fragment_rate" >
+
     </fragment>
 </navigation>

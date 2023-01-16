@@ -9,11 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.databinding.FragmentOrderStatusBinding
 import com.ciejaycoding.letsmeat.models.*
 import com.ciejaycoding.letsmeat.utils.ProgressDialog
 import com.ciejaycoding.letsmeat.utils.UiState
+import com.ciejaycoding.letsmeat.view.orders.adapters.PurchasesAdapter
+import com.ciejaycoding.letsmeat.view.orders.adapters.TransactionAdapter
 import com.ciejaycoding.letsmeat.viewmodel.PurchasesViewModel
 import com.ciejaycoding.letsmeat.viewmodel.TransactionViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class OrderStatusFragment : Fragment(),PurchasesAdapter.OrderClickListener {
+class OrderStatusFragment : Fragment(), PurchasesAdapter.OrderClickListener, TransactionAdapter.TransactionClickListener {
     private val transactionViewModel : TransactionViewModel by viewModels()
     private val purchasesViewModel : PurchasesViewModel by viewModels()
     private lateinit var binding : FragmentOrderStatusBinding
@@ -31,7 +32,7 @@ class OrderStatusFragment : Fragment(),PurchasesAdapter.OrderClickListener {
     private var position: Int ? = null
     private lateinit var progressDialog: ProgressDialog
     private var uid : String ? = null
-
+    private var list = mutableListOf<Transaction>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,36 +58,35 @@ class OrderStatusFragment : Fragment(),PurchasesAdapter.OrderClickListener {
             binding.recyclerviewTransactions.visibility = View.GONE
             binding.recyclerviewOrders.visibility = View.VISIBLE
             binding.recyclerviewOrders.apply {
-                layoutManager = LinearLayoutManager(view.context)
-                adapter = PurchasesAdapter(view.context,orders!!,position!!,this@OrderStatusFragment)
+                layoutManager = LinearLayoutManager(binding.root.context)
+                adapter = PurchasesAdapter(binding.root.context,orders!!,position!!,this@OrderStatusFragment)
             }
         } else {
             binding.recyclerviewTransactions.visibility = View.VISIBLE
             binding.recyclerviewOrders.visibility = View.GONE
-            var list = mutableListOf<Transaction>()
+
             when (position) {
-                1 -> {
-                    list = (transactions?.filter { it.status == OrderStatus.TO_PACKED } as MutableList<Transaction>?)!!
+                1-> {
+                    list = (transactions?.filter { it.status == OrderStatus.TO_SHIP || it.status == OrderStatus.TO_PACKED} as MutableList<Transaction>?)!!
                 }
                 2 -> {
-                    list = (transactions?.filter { it.status == OrderStatus.TO_SHIP } as MutableList<Transaction>?)!!
-                }
-                3 -> {
+
                     list = (transactions?.filter { it.status == OrderStatus.TO_RECEIVE } as MutableList<Transaction>?)!!
                 }
-                4 -> {
+                3 -> {
+
                     list = (transactions?.filter { it.status == OrderStatus.COMPLETED } as MutableList<Transaction>?)!!
                 }
-                5 -> {
+                4 -> {
                     list = (transactions?.filter { it.status == OrderStatus.DECLINED } as MutableList<Transaction>?)!!
                 }
-                6 -> {
+                5 -> {
                     list = (transactions?.filter { it.status == OrderStatus.CANCELED } as MutableList<Transaction>?)!!
                 }
             }
             binding.recyclerviewTransactions.apply {
-                layoutManager = LinearLayoutManager(view.context)
-                adapter = TransactionAdapter(view.context,list,position!!)
+                layoutManager = LinearLayoutManager(binding.root.context)
+                adapter = TransactionAdapter(binding.root.context,list,position!!,this@OrderStatusFragment)
             }
         }
         transactionViewModel.cancelTransaction.observe(viewLifecycleOwner) {
@@ -100,7 +100,7 @@ class OrderStatusFragment : Fragment(),PurchasesAdapter.OrderClickListener {
                 }
                 is UiState.Success -> {
                     progressDialog.stopLoading()
-                    findNavController().popBackStack()
+
                     purchasesViewModel.deleteOrder(it.data)
                 }
             }
@@ -118,6 +118,7 @@ class OrderStatusFragment : Fragment(),PurchasesAdapter.OrderClickListener {
                 is UiState.Success -> {
                     progressDialog.stopLoading()
                     Toast.makeText(binding.root.context,it.data, Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -157,6 +158,14 @@ class OrderStatusFragment : Fragment(),PurchasesAdapter.OrderClickListener {
         transactionViewModel.cancelTransaction(transaction)
     }
 
+    override fun viewTransaction(transactionID : String) {
+        val directions = PurchasesFragmentDirections.actionPurchasesFragmentToViewTransactionFragment(transactionID)
+        findNavController().navigate(directions)
+    }
 
+    override fun onStart() {
+        super.onStart()
+
+    }
 
 }

@@ -61,6 +61,7 @@ class PurchasesFragment : Fragment() {
                     progressDialog.showLoadingDialog("Fetching orders....")
                 }
                 is UiState.Success -> {
+                    orderList.clear()
                     progressDialog.stopLoading()
                     orderList.addAll(it.data)
                     transactionViewModel.getTransactions(currentUser!!.uid)
@@ -78,6 +79,7 @@ class PurchasesFragment : Fragment() {
                     progressDialog.showLoadingDialog("Getting all transactions....")
                 }
                 is UiState.Success -> {
+                    transactionList.clear()
                     progressDialog.stopLoading()
                     Toast.makeText(binding.root.context,"Success!", Toast.LENGTH_SHORT).show()
                     transactionList.addAll(it.data)
@@ -90,9 +92,9 @@ class PurchasesFragment : Fragment() {
     }
     private fun attachTabs() {
         if (orderList.isNotEmpty() || transactionList.isNotEmpty()) {
-            val indicator = PurchasesTabAdapter(this,OrderStatus.values(),orderList,transactionList)
+            val indicator = PurchasesTabAdapter(this,statusList(),orderList,transactionList)
             TabLayoutMediator(binding.tabLayout,binding.pager2.apply { adapter = indicator },true) {tab,position ->
-                tab.text =OrderStatus.values()[position].toString().replace("_"," ")
+                tab.text =statusList()[position].toString().replace("_"," ")
             }.attach()
             binding.tabLayout.getTabAt(args.tabPosition)!!.select()
         }
@@ -118,4 +120,16 @@ class PurchasesFragment : Fragment() {
         const val POSITION = "position"
     }
 
+    fun statusList() : Array<OrderStatus> {
+        var arr = arrayOf<OrderStatus>()
+        arr = OrderStatus.values().filter { it != OrderStatus.TO_PACKED }.toTypedArray()
+        return arr
+    }
+
+    override fun onResume() {
+        super.onResume()
+        orderList.clear()
+        transactionList.clear()
+
+    }
 }

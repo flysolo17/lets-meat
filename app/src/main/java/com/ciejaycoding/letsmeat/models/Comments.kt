@@ -7,11 +7,13 @@ class Comments(
     val clientID :String? = "",
     val comment: String ? = "",
     val rating: Float ? = 0f,
+    val date : Long ? = 0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
-        parcel.readValue(Float::class.java.classLoader) as? Float
+        parcel.readValue(Float::class.java.classLoader) as? Float,
+        parcel.readValue(Long::class.java.classLoader) as? Long
     ) {
     }
 
@@ -19,12 +21,12 @@ class Comments(
         parcel.writeString(clientID)
         parcel.writeString(comment)
         parcel.writeValue(rating)
+        parcel.writeValue(date)
     }
 
     override fun describeContents(): Int {
         return 0
     }
-
     companion object CREATOR : Parcelable.Creator<Comments> {
         override fun createFromParcel(parcel: Parcel): Comments {
             return Comments(parcel)

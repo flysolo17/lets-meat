@@ -59,8 +59,7 @@ class AccountFragment : Fragment() {
             findNavController().navigate(directions)
         }
         binding.buttonToRate.setOnClickListener {
-            val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(3)
-            findNavController().navigate(directions)
+            findNavController().navigate(R.id.action_navigation_account_to_rateFragment)
         }
         binding.buttonLogout.setOnClickListener {
             MaterialAlertDialogBuilder(view.context)

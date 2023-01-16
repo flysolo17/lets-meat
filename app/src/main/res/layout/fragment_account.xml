@@ -195,15 +195,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="To Rate"
+                        android:text="@string/to_rate"
                         android:textSize="10sp"
-
                         android:gravity="center"
                         android:fontFamily="@font/poppins"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -220,10 +217,10 @@
                 android:textAlignment="viewStart"
                 android:id="@+id/buttonMyAddresses"
                 android:text="@string/my_addresses"
-                android:drawableLeft="@drawable/ic_anddress"
+                android:drawableStart="@drawable/ic_anddress"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_light"
-                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
             <Button
                 android:layout_width="match_parent"
@@ -233,23 +230,23 @@
                 android:textAlignment="viewStart"
                 android:id="@+id/buttonEditProfile"
                 android:text="@string/account_settings"
-                android:drawableLeft="@drawable/ic_baseline_person_24"
+                android:drawableStart="@drawable/ic_baseline_person_24"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_light"
-                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
             <Button
                 android:id="@+id/buttonLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
-                android:drawableLeft="@drawable/ic_logout"
+                android:drawableStart="@drawable/ic_logout"
                 android:textSize="12sp"
                 android:textAlignment="viewStart"
-                android:text="Logout"
+                android:text="@string/logout"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_light"
-                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
         </LinearLayout>

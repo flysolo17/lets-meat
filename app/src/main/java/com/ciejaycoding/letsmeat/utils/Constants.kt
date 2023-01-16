@@ -3,21 +3,27 @@ package com.ciejaycoding.letsmeat.utils
 import android.app.Activity
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import com.ciejaycoding.letsmeat.models.CartAndProduct
-import com.ciejaycoding.letsmeat.models.Order
-import com.ciejaycoding.letsmeat.models.OrderItems
+import com.ciejaycoding.letsmeat.models.*
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 const val PRODUCTS_TABLE = "Products"
 const val CLIENTS_TABLE = "Clients"
 const val CLIENTS_CART = "Cart"
+const val MESSAGE_TABLE= "Messages"
+const val STAFF_TABLE = "Staff"
 const val ORDER_TABLE = "Orders"
+const val PROJECT_ID = "OjwzBl5Fl2bZF0GOX2ltbi6QUkF2"
 const val PROFILE_STORAGE = "profiles"
 const val TRANSACTION_TABLE = "Transactions"
 fun computePrice(cartAndProduct: CartAndProduct) : Float {
     return cartAndProduct.cart!!.quantity * cartAndProduct.products!!.price
 }
+
 fun formatPrice(number: Float) : String{
     val symbols = DecimalFormatSymbols()
     symbols.groupingSeparator = '\''
@@ -68,4 +74,64 @@ fun countOrder(order: Order) : String {
     return if (count == 1) {
         "$count item"
     } else "$count items"
+}
+fun dateFormat(timestamp : Long ) : String {
+    val dateFormated = SimpleDateFormat("dd MMM")
+    return dateFormated.format(Date(timestamp))
+}
+fun timeFormat(timestamp : Long ) : String {
+    val dateFormated = SimpleDateFormat("hh:mm aa")
+    return dateFormated.format(Date(timestamp))
+}
+
+fun startOfDay(timestamp: Long): Long {
+    val cal = Calendar.getInstance()
+    val date = Date(timestamp)
+    cal.time = date
+    cal[Calendar.HOUR_OF_DAY] = 0
+    cal[Calendar.MINUTE] = 0
+    cal[Calendar.SECOND] = 1
+    return cal.timeInMillis
+}
+
+fun endOfDay(timestamp: Long): Long {
+    val cal = Calendar.getInstance()
+    val date = Date(timestamp)
+    cal.time = date
+    cal[Calendar.HOUR_OF_DAY] = 23
+    cal[Calendar.MINUTE] = 59
+    cal[Calendar.SECOND] = 59
+    return cal.timeInMillis
+}
+
+fun computeTotalTax(amount : Int) : Int {
+    return 12 * (amount / 100)
+}
+fun computeTotalWithOutTax(amount : Int) : Int {
+    return (100-12) * amount / 100;
+}
+fun getCommentMedian(comments : List<Comments>) : Float{
+    var sum = 0f
+    comments.map {
+        sum += it.rating!!
+    }
+    return sum / comments.size
+}
+fun getRatingSum(comments: List<Comments>) : Float {
+    var sum = 0f
+    comments.map {
+        sum += it.rating!!
+    }
+    return sum
+}
+fun getItemSoldTotal(productID : String,transactionList : List<Transaction>) : Int {
+    var count = 0
+    transactionList.map {  transaction ->
+        transaction.order?.items!!.map {
+            if(it.id == productID) {
+                count += it.quantity!!
+            }
+        }
+    }
+    return count
 }

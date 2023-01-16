@@ -10,31 +10,35 @@ import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.databinding.FragmentViewProductBinding
 import com.ciejaycoding.letsmeat.databinding.LoadingDialogBinding
-import com.ciejaycoding.letsmeat.models.Cart
-import com.ciejaycoding.letsmeat.models.CartAndProduct
-import com.ciejaycoding.letsmeat.models.Products
-import com.ciejaycoding.letsmeat.utils.ProgressDialog
-import com.ciejaycoding.letsmeat.utils.UiState
+import com.ciejaycoding.letsmeat.models.*
+import com.ciejaycoding.letsmeat.utils.*
+import com.ciejaycoding.letsmeat.view.product.adapter.CommentAdapter
 import com.ciejaycoding.letsmeat.viewmodel.CartViewModel
+import com.ciejaycoding.letsmeat.viewmodel.TransactionViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewProduct : Fragment() {
     private val args: ViewProductArgs by navArgs()
-
+    private val transactionViewModel : TransactionViewModel by viewModels()
     private var _binding : FragmentViewProductBinding? = null
     private val binding get() = _binding!!
     private lateinit var bottomDialog : BottomSheetDialog
     private val cartViewModel : CartViewModel by viewModels()
     private lateinit var loadingDialog: ProgressDialog
+    private lateinit var transactionList : MutableList<Transaction>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +50,7 @@ class ViewProduct : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        transactionList = mutableListOf()
         loadingDialog = ProgressDialog(requireActivity())
         bottomDialog = BottomSheetDialog(requireActivity(), R.style.BottomsheetDialogStyle)
         bindViews(args.products)
@@ -73,24 +78,49 @@ class ViewProduct : Fragment() {
 
             }
         }
+        transactionViewModel.transactions.observe(viewLifecycleOwner) {
+            when(it) {
+                is UiState.Failed -> {
+                    loadingDialog.stopLoading()
+                    Toast.makeText(view.context,it.message,Toast.LENGTH_SHORT).show()
+                }
+                UiState.Loading -> {
+                    loadingDialog.showLoadingDialog("Loading.....")
+                }
+                is UiState.Success ->{
+                    loadingDialog.stopLoading()
+                    transactionList.addAll(it.data)
+                    binding.itemSold.text = getItemSoldTotal(productID = args.products.code!!,transactionList).toString()
+                }
+            }
+        }
     }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
     private fun bindViews(products: Products) {
+        transactionViewModel.getAllTransactions()
         if (products.images?.isNotEmpty()!!) {
             Glide.with(binding.root.context).load(products.images).into(binding.imageProduct)
         }
+        if(products.comments!!.isNotEmpty()) {
+            binding.ratingBar.rating = getCommentMedian(products.comments)
+        }
+        binding.textRatingTotal.text = getRatingSum(products.comments).toString()
         binding.textItemWeight.text ="${products.weight}kg"
         binding.textProductName.text = products.productName
         binding.textProductPrice.text = "₱ ${products.price}"
         binding.textProductDesc.text = products.description
         binding.textProductDetails.text = products.details
-        if (products.comments?.size == 0) {
+        if (products.comments.isEmpty()) {
             binding.textNoComment.visibility = View.VISIBLE
         } else {
             binding.textNoComment.visibility = View.GONE
+            binding.recylerviewComments.apply {
+                layoutManager = LinearLayoutManager(binding.root.context)
+                adapter = CommentAdapter(binding.root.context,products.comments)
+            }
         }
 
     }
@@ -168,6 +198,4 @@ class ViewProduct : Fragment() {
                 findNavController().navigate(R.id.action_viewProduct_to_loginFragment)
             }.show()
     }
-
-
 }

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.databinding.FragmentCheckOutBinding
+
 import com.ciejaycoding.letsmeat.models.*
 import com.ciejaycoding.letsmeat.utils.*
 import com.ciejaycoding.letsmeat.viewmodel.AuthViewModel
@@ -47,9 +48,10 @@ class CheckOutFragment : Fragment() {
         val cartAndProduct = args.cartAndProduct.toList()
         binding.textItemSubtotal.text = formatPrice(computeProductTotal(cartAndProduct).toFloat())
         binding.textTotalCount.text = "(${itemCount(cartAndProduct)} items):"
-        binding.textSubtotal.text =formatPrice(computeShippingFee(cartAndProduct).toFloat())
+        binding.textTotalWithoutTax.text =formatPrice(computeTotalWithOutTax(computeProductTotal(cartAndProduct)).toFloat())
+        binding.textTax.text = formatPrice(computeTotalTax(computeProductTotal(cartAndProduct)).toFloat())
         binding.textTotalWeight.text= countTotalWeight(cartAndProduct).toString()
-        binding.texShippingFee.text = computeShippingFee(cartAndProduct).toString()
+        binding.texShippingFee.text = formatPrice(computeShippingFee(cartAndProduct).toFloat())
         binding.textTotal.text = formatPrice(computeShippingFee(cartAndProduct) + computeProductTotal(cartAndProduct).toFloat())
         binding.textTotalPayment.text = formatPrice(computeShippingFee(cartAndProduct) + computeProductTotal(cartAndProduct).toFloat())
         val progressDialog = ProgressDialog(view.context)
@@ -127,19 +129,28 @@ class CheckOutFragment : Fragment() {
                     message = message,
                     date = System.currentTimeMillis()
                 )
-                cartViewModel.checkoutOrder(order = order).also {
-                    cartAndProduct.map {  cart->
-                        cart.cart?.let {
-                            cartViewModel.removeFromCart(order.clientID!!,it.productID!!)
+                MaterialAlertDialogBuilder(binding.root.context)
+                    .setTitle("Terms And Conditions")
+                    .setMessage("By clicking okay you agree to our terms and conditions.")
+                    .setNegativeButton("Cancel") { dialog,_ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton("Okay") { dialog,_ ->
+                        cartViewModel.checkoutOrder(order = order).also {
+                            cartAndProduct.map {  cart->
+                                cart.cart?.let {
+                                    cartViewModel.removeFromCart(order.clientID!!,it.productID!!)
+                                }
+                            }
+                            dialog.dismiss()
                         }
                     }
+                    .show()
 
-                }
 
             }
 
         }
-
     }
 
     private fun displayAddressInfo(clients: Clients) {

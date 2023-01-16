@@ -19,7 +19,7 @@ data class Order(
         parcel.readString(),
         parcel.readParcelable(Address::class.java.classLoader),
         parcel.createTypedArrayList(OrderItems),
-        TODO("status"),
+        parcel.readString(),
         parcel.readValue(Long::class.java.classLoader) as? Long
     ) {
     }

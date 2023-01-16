@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.models.Products
+import com.ciejaycoding.letsmeat.models.Transaction
 import com.ciejaycoding.letsmeat.utils.formatPrice
+import com.ciejaycoding.letsmeat.utils.getItemSoldTotal
 
-class ProductsAdapter(private val context : Context, private val productList : List<Products>,val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+class ProductsAdapter(private val context : Context, private val productList : List<Products>,val transactionList : List<Transaction>,val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
     interface ProductAdapterClickListener {
         fun onProductionClick(products: Products)
@@ -33,6 +36,7 @@ class ProductsAdapter(private val context : Context, private val productList : L
         holder.itemView.setOnClickListener {
             productAdapterClickListener.onProductionClick(products)
         }
+        holder.textProductSold.text = products.code?.let { getItemSoldTotal(it,transactionList).toString() }
 
     }
 
