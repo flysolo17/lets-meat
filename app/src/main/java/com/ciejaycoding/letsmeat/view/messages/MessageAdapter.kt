@@ -22,7 +22,7 @@ import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MessagesAdapter(private val context: Context,val  messagesList: List<Messages>,val myID : String) :
+class MessagesAdapter(private val context: Context, private val  messagesList: List<Messages>, private val myID : String) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val SEND_MESSAGE = 0
     private val RECEIVED_MESSAGE = 1
@@ -32,6 +32,7 @@ class MessagesAdapter(private val context: Context,val  messagesList: List<Messa
             MessageSentViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.row_sender, parent, false)
             )
+
         } else {
             MessageReceivedViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.row_receiver, parent, false)
@@ -41,7 +42,6 @@ class MessagesAdapter(private val context: Context,val  messagesList: List<Messa
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val messages: Messages = messagesList[position]
-        val firestore = FirebaseFirestore.getInstance()
         if (holder.itemViewType == SEND_MESSAGE) {
             val sentViewHolder = holder as MessageSentViewHolder
             sentViewHolder.message.text = messages.message
@@ -51,7 +51,6 @@ class MessagesAdapter(private val context: Context,val  messagesList: List<Messa
             val receivedViewHolder = holder as MessageReceivedViewHolder
             receivedViewHolder.message.text = messages.message
             receivedViewHolder.timestamp.text = messages.dateSend?.let { timestampToDate(it) }
-
         }
 
     }
@@ -73,12 +72,11 @@ class MessagesAdapter(private val context: Context,val  messagesList: List<Messa
         RecyclerView.ViewHolder(itemView) {
         var message: TextView
         var timestamp: TextView
-        var imageProfile : ImageView
+
         var firestore : FirebaseFirestore
         init {
             message = itemView.findViewById(R.id.textMessage)
-            timestamp = itemView.findViewById(R.id.textDate)
-            imageProfile = itemView.findViewById(R.id.imageProfile)
+            timestamp = itemView.findViewById(R.id.textMessageDate)
             firestore = FirebaseFirestore.getInstance()
         }
 
@@ -88,33 +86,17 @@ class MessagesAdapter(private val context: Context,val  messagesList: List<Messa
         RecyclerView.ViewHolder(itemView) {
         var message: TextView
         var timestamp: TextView
-        var imageProfile : ImageView
         var firestore : FirebaseFirestore
         init {
             message = itemView.findViewById(R.id.textMessage)
-            timestamp = itemView.findViewById(R.id.textDate)
-            imageProfile = itemView.findViewById(R.id.imageProfile)
+            timestamp = itemView.findViewById(R.id.textMessageDate)
             firestore = FirebaseFirestore.getInstance()
         }
 
 
     }
-/*    fun displayStaffProfile(staffID: String) {
-        firestore.collection(STAFF_TABLE)
-            .document(staffID)
-            .get()
-            .addOnSuccessListener {
-                if (it.exists()) {
-                    val data = it.toObject(Staff::class.java)
-                    data?.let { staff ->
-                        if (!staff.profile.isNullOrEmpty()) {
-                            Glide.with(itemView.context).load(staff.profile).into(imageProfile)
-                        }
-                    }
-                }
-            }
-    }
-    fun displayMyProfile(myID: String) {
+
+/*    fun displayMyProfile(myID: String) {
         firestore.collection(CLIENTS_TABLE)
             .document(myID)
             .get()

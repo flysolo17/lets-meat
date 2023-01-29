@@ -20,7 +20,8 @@ import com.ciejaycoding.letsmeat.utils.formatPrice
 import com.ciejaycoding.letsmeat.utils.orderTotal
 import com.google.android.material.divider.MaterialDivider
 
-class RatingAdapter(private val context : Context ,val transactionList : List<Transaction>,val ratingClickListener: RatingClickListener) : RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
+class RatingAdapter(private val context : Context, private val transactionList : List<Transaction>,
+                    private val ratingClickListener: RatingClickListener) : RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
     interface RatingClickListener {
         fun rateThisTransaction(transaction: Transaction)
     }

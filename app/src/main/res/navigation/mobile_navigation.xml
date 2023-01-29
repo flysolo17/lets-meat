@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_navigation_account_to_rateFragment"
             app:destination="@id/rateFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewProduct"
@@ -165,11 +168,21 @@
             android:name="transactionID"
             android:defaultValue="null" />
     </fragment>
+
     <fragment
         android:id="@+id/rateFragment"
         android:name="com.ciejaycoding.letsmeat.view.rating.RateFragment"
         android:label="To Rate"
         tools:layout="@layout/fragment_rate" >
 
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.ciejaycoding.letsmeat.view.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_viewTransactionFragment"
+            app:destination="@id/viewTransactionFragment" />
     </fragment>
 </navigation>

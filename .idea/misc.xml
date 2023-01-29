@@ -15,6 +15,7 @@
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_address.xml" value="0.264" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_cart.xml" value="0.25052083333333336" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_check_out.xml" value="0.264" />
+        <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_home.xml" value="0.25052083333333336" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_login.xml" value="0.4" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/fragment_menu_products.xml" value="0.1503623188405797" />
@@ -37,7 +38,7 @@
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_order.xml" value="0.536" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_products.xml" value="0.264" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_rate.xml" value="0.25052083333333336" />
-        <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_receiver.xml" value="0.4" />
+        <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_receiver.xml" value="0.33737864077669905" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_sender.xml" value="0.176" />
         <entry key="..\:/LetsMeat/app/src/main/res/drawable/bg_counter.xml" value="0.278" />
         <entry key="..\:/LetsMeat/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.278" />

@@ -75,6 +75,9 @@ class AccountFragment : Fragment() {
                 .show()
 
         }
+        binding.buttonHistory.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_account_to_historyFragment)
+        }
 
         authViewModel.profile.observe(viewLifecycleOwner) {
             when(it){
