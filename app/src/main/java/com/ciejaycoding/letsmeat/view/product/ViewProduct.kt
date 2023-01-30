@@ -121,6 +121,7 @@ class ViewProduct : Fragment() {
                 layoutManager = LinearLayoutManager(binding.root.context)
                 adapter = CommentAdapter(binding.root.context,products.comments)
             }
+            binding.textCommentCount.text = products.comments.size.toString()
         }
 
     }

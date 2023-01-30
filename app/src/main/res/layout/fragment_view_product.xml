@@ -173,7 +173,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="0"
+                        android:text="@string/_0"
+                        android:id="@+id/textCommentCount"
                         android:fontFamily="@font/poppins"
                         android:textColor="@color/black"/>
                 </LinearLayout>

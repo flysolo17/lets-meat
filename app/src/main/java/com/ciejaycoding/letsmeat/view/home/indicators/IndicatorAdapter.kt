@@ -13,16 +13,23 @@ class IndicatorAdapter(fragment: Fragment, private val categories: List<String>,
     override fun createFragment(position: Int): Fragment {
         val fragment = MenuProductsFragment()
         val array = arrayListOf<Products>()
-        array.addAll(productList.filter { it.category == categories[position]})
+        if (position == 0) {
+            array.addAll(productList)
+        } else {
+            array.addAll(productList.filter { it.category == categories[position]})
+        }
+
         fragment.arguments = Bundle().apply {
             putInt(ARG_POSITION,position)
             putParcelableArrayList(ARG_PRODUCTS,array)
+            putParcelableArrayList(ARG_TRANSACTIONS,array)
         }
         return fragment
     }
     companion object {
         const val ARG_POSITION = "POSITION"
         const val ARG_PRODUCTS ="PRODUCTS"
+        const val ARG_TRANSACTIONS = "TRANSACTIONS"
     }
 
 }

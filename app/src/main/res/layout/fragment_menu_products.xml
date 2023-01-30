@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".view.home.indicators.MenuProductsFragment">
-    <androidx.recyclerview.widget.RecyclerView
+
+    <EditText
+        android:id="@+id/inputSearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerviewProducts"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:inputType="text"
+        android:background="@drawable/search_bg"
+        android:fontFamily="@font/poppins_light"
+        android:hint="@string/seach_product_here"
+        android:padding="10dp"
+        android:textSize="12sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:drawableTint="@color/purple_500"
-            android:text="Add Address"
+            android:text="@string/add_address"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:drawableLeft="@drawable/ic_baseline_add_24"/>
     </LinearLayout>

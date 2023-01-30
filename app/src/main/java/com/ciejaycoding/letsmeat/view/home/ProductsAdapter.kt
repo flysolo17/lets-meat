@@ -12,10 +12,13 @@ import com.bumptech.glide.Glide
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.models.Products
 import com.ciejaycoding.letsmeat.models.Transaction
+import com.ciejaycoding.letsmeat.utils.TRANSACTION_TABLE
 import com.ciejaycoding.letsmeat.utils.formatPrice
 import com.ciejaycoding.letsmeat.utils.getItemSoldTotal
+import com.google.firebase.firestore.FirebaseFirestore
 
-class ProductsAdapter(private val context : Context, private val productList : List<Products>,val transactionList : List<Transaction>,val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+class ProductsAdapter(private val context : Context, private val productList : List<Products>,
+                      private val transactionList : List<Transaction>, val productAdapterClickListener: ProductAdapterClickListener) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
     interface ProductAdapterClickListener {
         fun onProductionClick(products: Products)
@@ -48,5 +51,7 @@ class ProductsAdapter(private val context : Context, private val productList : L
         val textPrice : TextView = itemView.findViewById(R.id.textPrice)
         val imageProduct : ImageView = itemView.findViewById(R.id.imageProduct)
         val textProductSold : TextView = itemView.findViewById(R.id.itemSold)
+        val firestore = FirebaseFirestore.getInstance()
+
     }
 }

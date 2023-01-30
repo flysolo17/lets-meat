@@ -29,6 +29,7 @@ class HomeFragment : Fragment(){
     private lateinit var indicatorAdapter: IndicatorAdapter
     private lateinit var productList : ArrayList<Products>
     private lateinit var progressDialog : ProgressDialog
+    private var category : MutableList<String> = mutableListOf("ALL")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,7 +59,8 @@ class HomeFragment : Fragment(){
                     productList.addAll(state.data)
                 }
             }
-            val category =  productList.map { it.category }.distinct()
+
+            category.addAll(productList.map { it.category }.distinct())
             indicatorAdapter = IndicatorAdapter(this,category,productList)
             TabLayoutMediator(binding.tabLayout, binding.pager2.apply {
                 adapter = indicatorAdapter
