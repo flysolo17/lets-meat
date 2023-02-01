@@ -55,12 +55,14 @@ class HomeFragment : Fragment(){
                     progressDialog.showLoadingDialog("Fetching Products....")
                 }
                 is UiState.Success -> {
+                    category.clear()
                     progressDialog.stopLoading()
                     productList.addAll(state.data)
+                    category.addAll(productList.map { it.category }.distinct())
                 }
             }
 
-            category.addAll(productList.map { it.category }.distinct())
+
             indicatorAdapter = IndicatorAdapter(this,category,productList)
             TabLayoutMediator(binding.tabLayout, binding.pager2.apply {
                 adapter = indicatorAdapter
