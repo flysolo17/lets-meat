@@ -92,4 +92,5 @@
     <string name="add_address">Add Address</string>
     <string name="seach_product_here">Seach Product Here...</string>
 
+    <string name="hyperlink"><a href="http://localhost:4200/eula">Click here</a></string>
 </resources>

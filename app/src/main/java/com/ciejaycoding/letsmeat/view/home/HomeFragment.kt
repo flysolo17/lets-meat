@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment(){
     private lateinit var binding : FragmentHomeBinding
-
     private val productsViewModel : ProductsViewModel by  viewModels()
     private val transactionViewModel : TransactionViewModel by  viewModels()
     private lateinit var productsAdapter: ProductsAdapter
@@ -61,8 +60,6 @@ class HomeFragment : Fragment(){
                     category.addAll(productList.map { it.category }.distinct())
                 }
             }
-
-
             indicatorAdapter = IndicatorAdapter(this,category,productList)
             TabLayoutMediator(binding.tabLayout, binding.pager2.apply {
                 adapter = indicatorAdapter
