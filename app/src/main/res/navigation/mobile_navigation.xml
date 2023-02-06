@@ -31,7 +31,11 @@
         android:id="@+id/navigation_messages"
         android:name="com.ciejaycoding.letsmeat.view.messages.MessagesFragment"
         android:label="Messages"
-        tools:layout="@layout/fragment_messages" />
+        tools:layout="@layout/fragment_messages" >
+        <action
+            android:id="@+id/action_navigation_messages_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_account"
         android:name="com.ciejaycoding.letsmeat.view.account.AccountFragment"

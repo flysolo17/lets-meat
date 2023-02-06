@@ -38,13 +38,20 @@ fun itemCount(productList : List<CartAndProduct>) : Int{
 fun computeProductTotal(productList : List<CartAndProduct>) : Int {
     return productList.sumOf { it.cart!!.quantity * it.products!!.price.toInt()}
 }
-fun computeShippingFee(productList : List<CartAndProduct>) : Int {
-    val totalWeight = productList.sumOf { it.products!!.weight * it.cart!!.quantity}
-    return totalWeight * 20
+fun computeShippingFee(productList : List<CartAndProduct>) : Float {
+    var weight = 0f
+    productList.map {
+       weight +=  it.products!!.weight * it.cart!!.quantity
+    }
+    return weight * 10
 }
 
-fun countTotalWeight(productList: List<CartAndProduct>) : Int{
-    return productList.sumOf { it.products!!.weight * it.cart!!.quantity}
+fun countTotalWeight(productList: List<CartAndProduct>) : Float {
+    var weight = 0f
+    productList.map {
+        weight +=  it.products!!.weight * it.cart!!.quantity
+    }
+    return weight
 }
 fun generateOrderNumber() : String {
     val str = "0123456789"
@@ -63,8 +70,12 @@ fun Activity.getFileExtension(uri: Uri): String? {
 fun computeItemPrice(items: OrderItems) : Float {
     return items.quantity!! * items.originalPrice!!
 }
-fun orderTotal(order : Order) : Int {
-    val shipping = order.items!!.sumOf { it.weight!! * it.quantity!! } * 20
+fun orderTotal(order : Order) : Float {
+    var weight = 0f
+    order.items!!.map {
+        weight +=  it.weight!! * it.quantity!!
+    }
+    val shipping = weight * 10
     val itemTotal = order.items.sumOf { it.quantity!! * it.originalPrice!!.toInt() }
     return itemTotal + shipping
 }
@@ -105,7 +116,7 @@ fun endOfDay(timestamp: Long): Long {
 }
 
 fun computeTotalTax(amount : Int) : Int {
-    return 12 * (amount / 100)
+    return 12 * amount / 100
 }
 fun computeTotalWithOutTax(amount : Int) : Int {
     return (100-12) * amount / 100;

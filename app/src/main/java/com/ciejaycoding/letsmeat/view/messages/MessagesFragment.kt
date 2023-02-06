@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.databinding.FragmentMessagesBinding
 import com.ciejaycoding.letsmeat.models.Messages
 import com.ciejaycoding.letsmeat.models.Staff
@@ -38,21 +40,20 @@ class MessagesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         messageList = mutableListOf()
-
         user = FirebaseAuth.getInstance().currentUser
+        detectUser(user)
         user?.let {
-            messagesAdapter = MessagesAdapter(view.context,messageList,it.uid)
+            messagesAdapter = MessagesAdapter(view.context,messageList, it.uid)
             getAllMessage(it.uid)
+            val linearLayoutManager = LinearLayoutManager(view.context)
+            linearLayoutManager.reverseLayout = true
+            linearLayoutManager.stackFromEnd = true
+            binding.recyclerviewMessages.apply {
+                layoutManager = linearLayoutManager
+                adapter = messagesAdapter
+            }
         }
-
-        val linearLayoutManager = LinearLayoutManager(view.context)
-        linearLayoutManager.reverseLayout = true
-        linearLayoutManager.stackFromEnd = true
-        binding.recyclerviewMessages.apply {
-            layoutManager = linearLayoutManager
-            adapter = messagesAdapter
-        }
-
+        binding.buttonLogin.setOnClickListener { findNavController().navigate(R.id.action_navigation_messages_to_loginFragment) }
         binding.buttonSend.setOnClickListener {
             val message = binding.edtMessage.text.toString()
             if (message.isNotEmpty()) {
@@ -98,6 +99,15 @@ class MessagesFragment : Fragment() {
                     }
                 }
             }
+    }
+    private fun detectUser(user : FirebaseUser?) {
+        if (user != null) {
+            binding.layoutMessaging.visibility = View.VISIBLE
+            binding.layoutNoUser.visibility = View.GONE
+        } else {
+            binding.layoutMessaging.visibility = View.GONE
+            binding.layoutNoUser.visibility = View.VISIBLE
+        }
     }
 
 

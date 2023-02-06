@@ -25,6 +25,9 @@ import com.ciejaycoding.letsmeat.viewmodel.AuthViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 @AndroidEntryPoint
@@ -78,9 +81,7 @@ class UpdateAccount : Fragment() {
                     client.fullname = binding.inputFullName.text.toString()
                     authViewModel.updateAccount(client)
                 }
-
             }
-
         }
         authViewModel.uploadProfile.observe(viewLifecycleOwner) {
             when(it) {
@@ -124,4 +125,5 @@ class UpdateAccount : Fragment() {
         }
         binding.inputFullName.setText(clients.fullname)
     }
+
 }

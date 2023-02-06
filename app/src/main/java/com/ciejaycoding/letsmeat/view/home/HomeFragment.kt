@@ -55,6 +55,7 @@ class HomeFragment : Fragment(){
                 }
                 is UiState.Success -> {
                     category.clear()
+                    category.add("ALL")
                     progressDialog.stopLoading()
                     productList.addAll(state.data)
                     category.addAll(productList.map { it.category }.distinct())
