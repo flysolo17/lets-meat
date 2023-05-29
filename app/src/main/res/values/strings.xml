@@ -93,4 +93,6 @@
     <string name="seach_product_here">Seach Product Here...</string>
 
     <string name="hyperlink"><a href="http://localhost:4200/eula">Click here</a></string>
+    <string name="jff_frozen_meat">JFF Frozen Meat</string>
+    <string name="deliver">DELIVER</string>
 </resources>

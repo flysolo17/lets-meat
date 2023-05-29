@@ -1,17 +1,25 @@
 package com.ciejaycoding.letsmeat.repository.cart
 
+import android.net.Uri
 import com.ciejaycoding.letsmeat.models.Cart
 import com.ciejaycoding.letsmeat.models.CartAndProduct
 import com.ciejaycoding.letsmeat.models.Order
+import com.ciejaycoding.letsmeat.models.Payment
 import com.ciejaycoding.letsmeat.models.Products
 import com.ciejaycoding.letsmeat.utils.*
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.common.io.Files
+import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.checkerframework.checker.guieffect.qual.UI
 
-class CartRepositoryImpl(private val firestore: FirebaseFirestore) : CartRepository {
+class CartRepositoryImpl(private val firestore: FirebaseFirestore,private val storage: FirebaseStorage) : CartRepository {
     private val cartAndProductList  = mutableListOf<CartAndProduct>()
     private val cartList  = mutableListOf<Cart>()
     override suspend fun addToCart(uid: String,cart: Cart,result : (UiState<String>) -> Unit) {
@@ -122,6 +130,29 @@ class CartRepositoryImpl(private val firestore: FirebaseFirestore) : CartReposit
                     result.invoke(UiState.Failed("Transaction Failed"))
                 }
             }
+    }
+
+    override suspend fun uploadGcashReceipt(order: Order, imageUri: Uri, uid: String, result: (UiState<Order>) -> Unit) {
+        val storage  = storage.getReference(uid).child(GCASH).child(System.currentTimeMillis().toString() + "." + Files.getFileExtension(
+            imageUri.toString())
+        )
+        result.invoke(UiState.Loading)
+        try {
+            val uri: Uri = withContext(Dispatchers.IO) {
+                storage
+                    .putFile(imageUri)
+                    .await()
+                    .storage
+                    .downloadUrl
+                    .await()
+            }
+            order.payment?.details?.image = uri.toString()
+            result.invoke(UiState.Success(order))
+        } catch (e: FirebaseException){
+            result.invoke(UiState.Failed(e.message!!))
+        }catch (e: Exception){
+            result.invoke(UiState.Failed(e.message!!))
+        }
     }
 
 }

@@ -49,7 +49,6 @@ class CartFragment : Fragment(),CartAdapter.CartClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = FirebaseAuth.getInstance().currentUser
-
         user?.let {
             cartViewModel.getAllCart(it.uid)
         }

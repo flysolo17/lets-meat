@@ -106,8 +106,6 @@ class PurchasesFragment : Fragment() {
         }
         override fun createFragment(position: Int): Fragment {
             val fragment = OrderStatusFragment()
-
-
             fragment.arguments = Bundle().apply {
                 putInt(POSITION,position)
                 putParcelableArrayList("orders",orders)

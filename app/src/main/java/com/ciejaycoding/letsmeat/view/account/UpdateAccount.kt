@@ -35,6 +35,7 @@ class UpdateAccount : Fragment() {
     private lateinit var binding : FragmentUpdateAccountBinding
     private val args : UpdateAccountArgs by navArgs()
     private var imageURI: Uri? = null
+
     private val authViewModel : AuthViewModel by viewModels()
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

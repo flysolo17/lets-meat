@@ -1,9 +1,11 @@
 package com.ciejaycoding.letsmeat.models
 
-data class PaymentDetails(
-    val subtotal : Float? = null,
-    val shipping : Double? = null,
-    val total : Double? = null,
-){
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-}
+@Parcelize
+data class PaymentDetails(
+    val phone : String? = null,
+    val referenceNumber : String? = null,
+    var image : String? = null,
+) : Parcelable

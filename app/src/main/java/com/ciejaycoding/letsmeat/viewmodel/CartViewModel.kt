@@ -1,5 +1,6 @@
 package com.ciejaycoding.letsmeat.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ciejaycoding.letsmeat.models.Cart
 import com.ciejaycoding.letsmeat.models.CartAndProduct
 import com.ciejaycoding.letsmeat.models.Order
+import com.ciejaycoding.letsmeat.models.Payment
 import com.ciejaycoding.letsmeat.repository.cart.CartRepository
 import com.ciejaycoding.letsmeat.utils.UiState
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -29,6 +31,9 @@ class CartViewModel @Inject constructor(private val  cartRepository: CartReposit
 
     private var _checkOutOrder= MutableLiveData<UiState<String>>()
     val checkoutOrder : LiveData<UiState<String>> get() = _checkOutOrder
+
+    private val _uploadReceipt= MutableLiveData<UiState<Order>>()
+    val uploadReceipt : LiveData<UiState<Order>> get() = _uploadReceipt
 
     fun addToCart(uid: String,cart: Cart) {
         viewModelScope.launch {
@@ -77,6 +82,13 @@ class CartViewModel @Inject constructor(private val  cartRepository: CartReposit
     fun removeFromCart(uid : String , cartID : String) {
         viewModelScope.launch {
             cartRepository.removeToCart(uid, cartID)
+        }
+    }
+    fun uploadReceipt(order: Order, imageURI : Uri, uid : String) {
+        viewModelScope.launch {
+            cartRepository.uploadGcashReceipt(order,imageURI,uid) {
+                _uploadReceipt.value = it
+            }
         }
     }
 }

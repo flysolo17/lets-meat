@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -43,6 +42,7 @@
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_rate.xml" value="0.25052083333333336" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_receiver.xml" value="0.33737864077669905" />
         <entry key="..\:/Documents/LetsMeat/app/src/main/res/layout/row_sender.xml" value="0.176" />
+        <entry key="..\:/Documents/LetsMeat/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2484375" />
         <entry key="..\:/LetsMeat/app/src/main/res/drawable/bg_counter.xml" value="0.278" />
         <entry key="..\:/LetsMeat/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.278" />
         <entry key="..\:/LetsMeat/app/src/main/res/drawable/circle.xml" value="0.322" />
@@ -70,7 +70,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

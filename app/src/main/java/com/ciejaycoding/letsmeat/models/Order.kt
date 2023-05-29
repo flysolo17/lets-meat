@@ -11,9 +11,7 @@ data class Order(
     val orderNumber : String ? =null,
     val address: Address ? = null,
     val items : List<OrderItems> ? = null,
-    val message : String? = null,
+    val message : String?= null,
+    var payment: Payment ? = null,
     val date : Long ?= null,
-
-) : Parcelable {
-
-}
+) : Parcelable

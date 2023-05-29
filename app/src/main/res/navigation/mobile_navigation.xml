@@ -137,8 +137,8 @@
         android:label="OTP Verification"
         tools:layout="@layout/fragment_otp_view" >
         <argument
-            android:name="phone"
-            app:argType="string" />
+            android:name="authModel"
+            app:argType="com.ciejaycoding.letsmeat.models.AuthModel" />
     </fragment>
     <fragment
         android:id="@+id/updateAccount"

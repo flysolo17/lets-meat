@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 const val PRODUCTS_TABLE = "Products"
+const val GCASH = "Payments"
 const val CLIENTS_TABLE = "Clients"
 const val CLIENTS_CART = "Cart"
 const val MESSAGE_TABLE= "Messages"

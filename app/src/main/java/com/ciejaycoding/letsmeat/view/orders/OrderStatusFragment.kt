@@ -153,7 +153,7 @@ class OrderStatusFragment : Fragment(), PurchasesAdapter.OrderClickListener, Tra
             order,
             OrderStatus.CANCELED,
             System.currentTimeMillis(),
-            listOf(details),
+            listOf(details)
         )
         transactionViewModel.cancelTransaction(transaction)
     }
@@ -163,9 +163,5 @@ class OrderStatusFragment : Fragment(), PurchasesAdapter.OrderClickListener, Tra
         findNavController().navigate(directions)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-    }
 
 }

@@ -41,7 +41,7 @@ object AppModules {
     @Singleton
     @Provides
     fun provideCartRepository() : CartRepository {
-        return CartRepositoryImpl(FirebaseFirestore.getInstance())
+        return CartRepositoryImpl(FirebaseFirestore.getInstance(),FirebaseStorage.getInstance())
     }
 
     @Singleton
