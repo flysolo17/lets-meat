@@ -1,0 +1,42 @@
+<div class="main-container">
+  <div class="form-container">
+    <div class="title-bg">
+      <p class="titles">Let's Meat</p>
+    </div>
+    <div class="p-2" *ngIf="showSuccessAlert == true">
+      <div class="alert alert-success" role="alert">Successfully Logged In</div>
+    </div>
+    <div class="p-2" *ngIf="showErrorAlert == true">
+      <div class="alert alert-danger" role="alert">
+        Invalid Email or Password
+      </div>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="loginFunc()" class="p-3">
+      <div class="form-outline mb-4">
+        <label for="inputEmail" class="mb-1">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control"
+          id="inputEmail"
+          placeholder="example@gmail.com"
+        />
+      </div>
+      <div class="form-outline mb-4">
+        <label for="inputPassword" class="mb-1">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          id="inputPassword"
+          placeholder="Password"
+        />
+        <div class="invalid-feedback">invalid password</div>
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-success">Login</button>
+      </div>
+    </form>
+  </div>
+</div>

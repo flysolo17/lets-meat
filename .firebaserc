@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "let-s-meat-67f65": {
+      "hosting": {
+        "lets-meatv2": [
+          "letsmeatv2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "let-s-meat-67f65"
+  }
+}
