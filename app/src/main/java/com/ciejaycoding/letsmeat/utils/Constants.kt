@@ -40,11 +40,8 @@ fun computeProductTotal(productList : List<CartAndProduct>) : Int {
     return productList.sumOf { it.cart!!.quantity * it.products!!.price.toInt()}
 }
 fun computeShippingFee(productList : List<CartAndProduct>) : Float {
-    var weight = 0f
-    productList.map {
-       weight +=  it.products!!.weight * it.cart!!.quantity
-    }
-    return weight * 10
+    var weight = countTotalWeight(productList)
+    return computeShipping(weight.toInt()).toFloat()
 }
 
 fun countTotalWeight(productList: List<CartAndProduct>) : Float {
@@ -76,9 +73,9 @@ fun orderTotal(order : Order) : Float {
     order.items!!.map {
         weight +=  it.weight!! * it.quantity!!
     }
-    val shipping = weight * 10
+    val shipping = computeShipping(weight.toInt())
     val itemTotal = order.items.sumOf { it.quantity!! * it.originalPrice!!.toInt() }
-    return itemTotal + shipping
+    return (itemTotal + shipping).toFloat()
 }
 
 fun countOrder(order: Order) : String {
@@ -146,4 +143,19 @@ fun getItemSoldTotal(productID : String,transactionList : List<Transaction>) : I
         }
     }
     return count
+}
+fun computeShipping(weight : Int): Int {
+    var shipping = 0;
+    shipping = if (weight <= 20) {
+        150;
+    } else if (weight in 21..40) {
+        300;
+    } else {
+        if (weight in 41..59) {
+            400
+        } else {
+            500;
+        }
+    }
+    return shipping;
 }

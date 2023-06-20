@@ -120,7 +120,7 @@ class CheckOutFragment : Fragment() {
                             it.addresses!!.toTypedArray(),
                             it.id!!,
                             it.defaultAddress
-                        )
+                    )
                     findNavController().navigate(directions)
                 }
             }
@@ -146,6 +146,7 @@ class CheckOutFragment : Fragment() {
 
                 val order = Order(
                     "", client.id,
+                    orderType = if (binding.textTransactionType.equals("DELIVER")) OrderType.DELIVER else OrderType.PICK_UP,
                     generateOrderNumber(),
                     address = client.addresses?.get(client.defaultAddress),
                     items = items,
