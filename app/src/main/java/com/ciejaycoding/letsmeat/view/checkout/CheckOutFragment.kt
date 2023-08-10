@@ -63,22 +63,27 @@ class CheckOutFragment : Fragment() {
             iterateCart(it)
         }
         val cartAndProduct = args.cartAndProduct.toList()
-        binding.textGcashName.text = "Gcash name: Juan Dela Cruz"
-        binding.textGcashNumber.text = "Gcash #: 09322384675"
-        binding.textItemSubtotal.text = formatPrice(computeProductTotal(cartAndProduct).toFloat())
-        binding.textTotalCount.text = "(${itemCount(cartAndProduct)} items):"
-        binding.textTotalWithoutTax.text =formatPrice(computeTotalWithOutTax(computeProductTotal(cartAndProduct)).toFloat())
-        binding.textTax.text = formatPrice(computeTotalTax(computeProductTotal(cartAndProduct)).toFloat())
-        binding.textTotalWeight.text= countTotalWeight(cartAndProduct).toString()
-        binding.texShippingFee.text = formatPrice(computeShippingFee(cartAndProduct))
-        binding.textTotal.text = formatPrice(computeShippingFee(cartAndProduct) + computeProductTotal(cartAndProduct).toFloat())
-        binding.textTotalPayment.text = formatPrice(computeShippingFee(cartAndProduct) + computeProductTotal(cartAndProduct).toFloat())
+        displayInfo(cartAndProduct)
         progressDialog = ProgressDialog(binding.root.context)
         user = FirebaseAuth.getInstance().currentUser
         user?.let {
             authViewModel.getProfile(it.uid)
         }
         return binding.root
+    }
+    private fun  displayInfo(cartAndProduct: List<CartAndProduct>) {
+        val type =  if (binding.textTransactionType.text.toString() == "DELIVER") 0 else 1
+
+        binding.textGcashName.text = "Gcash name: Juan Dela Cruz"
+        binding.textGcashNumber.text = "Gcash #: 09322384675"
+        binding.textItemSubtotal.text = formatPrice(computeProductTotal(cartAndProduct).toFloat())
+        binding.textTotalCount.text = "(${itemCount(cartAndProduct)} items):"
+        binding.textTotalWithoutTax.text =formatPrice(computeTotalWithOutTax(computeProductTotal(cartAndProduct)).toFloat())
+        binding.textTax.text = formatPrice(computeTotalTax(computeProductTotal(cartAndProduct)).toFloat())
+        binding.textTotalWeight.text= "${formatWeight(countTotalWeight(cartAndProduct).toFloat())}kg"
+        binding.texShippingFee.text = formatPrice(computeShipping(countTotalWeight(cartAndProduct),type).toFloat())
+        binding.textTotal.text = formatPrice(computeShipping(countTotalWeight(cartAndProduct),type).toFloat() + computeProductTotal(cartAndProduct).toFloat())
+        binding.textTotalPayment.text = formatPrice(computeShipping(countTotalWeight(cartAndProduct),type).toFloat() + computeProductTotal(cartAndProduct).toFloat())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,9 +92,12 @@ class CheckOutFragment : Fragment() {
         binding.textTransactionType.setOnClickListener {
             val items = arrayOf("DELIVER","PICK_UP")
             MaterialAlertDialogBuilder(view.context)
-                .setTitle("Select Language")
+                .setTitle("Select")
                 .setItems(items) { dialog, which ->
+                    val cartAndProduct = args.cartAndProduct.toList()
                     binding.textTransactionType.text = items[which]
+                    displayInfo(cartAndProduct)
+
                 }
                 .show()
         }
@@ -140,13 +148,14 @@ class CheckOutFragment : Fragment() {
                         item.cart!!.quantity,
                         item.products.price,
                         item.products.cost,
-                        item.products.weight
+                        item.products.weight,
+                        item.products.weightType
                     )
                 }.toList()
 
                 val order = Order(
                     "", client.id,
-                    orderType = if (binding.textTransactionType.equals("DELIVER")) OrderType.DELIVER else OrderType.PICK_UP,
+                    orderType = if (binding.textTransactionType.text.equals("DELIVER")) OrderType.DELIVER else OrderType.PICK_UP,
                     generateOrderNumber(),
                     address = client.addresses?.get(client.defaultAddress),
                     items = items,
@@ -168,7 +177,8 @@ class CheckOutFragment : Fragment() {
                 if (paymentType == PaymentType.GCASH) {
                     getGcashInfo(user?.uid!!,order)
                 } else {
-                    val total = computeShippingFee(args.cartAndProduct.toList()) + computeProductTotal(args.cartAndProduct.toList()).toFloat()
+                    val type =  if (binding.textTransactionType.equals("DELIVER")) 0 else 1
+                    val total = computeShipping(countTotalWeight(args.cartAndProduct.toList()),type) + computeProductTotal(args.cartAndProduct.toList()).toFloat()
                     order.payment = Payment(PaymentType.CASH_ON_DELIVERY,
                         total.toInt(),PaymentDetails("","",""))
                     cartViewModel.checkoutOrder(order = order).also {

@@ -96,10 +96,11 @@ class AccountFragment : Fragment() {
             }
         }
         binding.buttonMyAddresses.setOnClickListener {
-            val action = AccountFragmentDirections.actionNavigationAccountToAddressFragment(client.addresses!!.toTypedArray(),
-                client.id!!,
-                client.defaultAddress,
-                )
+            val action = AccountFragmentDirections.actionNavigationAccountToAddressFragment(
+                addresses = client.addresses?.toTypedArray() ?: emptyArray(),
+                 client.id!!,
+                defaultAddress = client.defaultAddress
+            )
             findNavController().navigate(action)
         }
         binding.buttonEditProfile.setOnClickListener {

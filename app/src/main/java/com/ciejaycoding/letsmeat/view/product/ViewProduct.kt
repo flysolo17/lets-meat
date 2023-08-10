@@ -108,7 +108,7 @@ class ViewProduct : Fragment() {
             binding.ratingBar.rating = getCommentMedian(products.comments)
         }
         binding.textRatingTotal.text = getRatingSum(products.comments).toString()
-        binding.textItemWeight.text ="${products.weight}kg"
+        binding.textItemWeight.text ="${products.weight} ${products.weightType}"
         binding.textProductName.text = products.productName
         binding.textProductPrice.text = "₱ ${products.price}"
         binding.textProductDesc.text = products.description

@@ -20,5 +20,6 @@ data class Products(
     val createdAt: Long = 0 ,
     val expiration : Long = 0,
     val category : String = "",
-    val weight : Float = 0f
+    val weight : Float = 0f,
+    val   weightType: String = "",
 ) : Parcelable

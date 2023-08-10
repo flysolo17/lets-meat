@@ -102,7 +102,9 @@ class AuthRepositoryImpl(private val auth : FirebaseAuth,private val firestore: 
             .addOnCompleteListener { task: Task<AuthResult?> ->
                 if (task.isSuccessful) {
                     val user: FirebaseUser = auth.currentUser!!
-                    val client = Clients(id= user.uid,"",user.phoneNumber,"No Name")
+                    val client = Clients(id= user.uid,"",user.phoneNumber,"No Name",
+                        mutableListOf()
+                    )
                     result.invoke(UiState.Success(client))
                 } else {
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {

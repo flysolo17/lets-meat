@@ -19,5 +19,5 @@ data class Order(
 
 
 enum class OrderType {
-    DELIVER , PICK_UP
+    DELIVER  , PICK_UP ,WALK_IN
 }

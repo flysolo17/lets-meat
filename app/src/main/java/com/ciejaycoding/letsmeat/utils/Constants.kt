@@ -29,9 +29,18 @@ fun formatPrice(number: Float) : String{
     val symbols = DecimalFormatSymbols()
     symbols.groupingSeparator = '\''
     symbols.decimalSeparator = ','
-    val decimalFormat = DecimalFormat("₱ #,###.00")
+    val decimalFormat = DecimalFormat("₱ #,##0.00")
     return decimalFormat.format(number)
 }
+
+fun formatWeight(number: Float) : String{
+    val symbols = DecimalFormatSymbols()
+    symbols.groupingSeparator = '\''
+    symbols.decimalSeparator = ','
+    val decimalFormat = DecimalFormat("#,##0.00")
+    return decimalFormat.format(number)
+}
+
 
 fun itemCount(productList : List<CartAndProduct>) : Int{
     return productList.sumOf { it.cart!!.quantity }
@@ -39,17 +48,20 @@ fun itemCount(productList : List<CartAndProduct>) : Int{
 fun computeProductTotal(productList : List<CartAndProduct>) : Int {
     return productList.sumOf { it.cart!!.quantity * it.products!!.price.toInt()}
 }
-fun computeShippingFee(productList : List<CartAndProduct>) : Float {
-    var weight = countTotalWeight(productList)
-    return computeShipping(weight.toInt()).toFloat()
-}
-
-fun countTotalWeight(productList: List<CartAndProduct>) : Float {
-    var weight = 0f
+fun countTotalWeight(productList: List<CartAndProduct>) : Double {
+    var weight = 0.00
     productList.map {
-        weight +=  it.products!!.weight * it.cart!!.quantity
+        weight +=  convertToKilograms(it.products!!.weight.toDouble(), it.products.weightType) * it.cart!!.quantity
     }
     return weight
+}
+fun convertToKilograms(value: Double, unit: String): Double {
+    val kilograms: Double = when (unit.lowercase(Locale.ROOT)) {
+        "g", "gram", "grams", "ml", "milliliter", "milliliters" -> value / 1000
+        "l", "liter", "liters" ,"kg" -> value
+        else -> 1.00
+    }
+    return kilograms
 }
 fun generateOrderNumber() : String {
     val str = "0123456789"
@@ -68,14 +80,15 @@ fun Activity.getFileExtension(uri: Uri): String? {
 fun computeItemPrice(items: OrderItems) : Float {
     return items.quantity!! * items.originalPrice!!
 }
-fun orderTotal(order : Order) : Float {
-    var weight = 0f
+fun orderTotal(order : Order) : Int {
+    var weight = 0.00
     order.items!!.map {
-        weight +=  it.weight!! * it.quantity!!
+        weight +=  convertToKilograms(it.weight!!.toDouble(),it.weightType!!) * it.quantity!!
     }
-    val shipping = computeShipping(weight.toInt())
+    val type = if (order.orderType == OrderType.DELIVER) 0 else 1
+    val shipping = computeShipping(weight,type)
     val itemTotal = order.items.sumOf { it.quantity!! * it.originalPrice!!.toInt() }
-    return (itemTotal + shipping).toFloat()
+    return (itemTotal + shipping)
 }
 
 fun countOrder(order: Order) : String {
@@ -144,18 +157,29 @@ fun getItemSoldTotal(productID : String,transactionList : List<Transaction>) : I
     }
     return count
 }
-fun computeShipping(weight : Int): Int {
+fun computeOrderWeight(orderItems: List<OrderItems>) : Float {
+    var weight = 0f
+    orderItems.map {
+        weight = it.weight!! * it.quantity!!
+    }
+    return weight
+}
+fun computeShipping(weight : Double,type : Int): Int {
     var shipping = 0;
-    shipping = if (weight <= 20) {
-        150;
-    } else if (weight in 21..40) {
-        300;
-    } else {
-        if (weight in 41..59) {
-            400
+    if (type == 0) {
+        shipping = if (weight < 75.00) {
+            50
         } else {
-            500;
+            100
         }
     }
     return shipping;
+}
+
+fun getOrderType(order: Order) : Int{
+    return  if (order.orderType == OrderType.DELIVER) {
+        0
+    } else {
+        1
+    }
 }

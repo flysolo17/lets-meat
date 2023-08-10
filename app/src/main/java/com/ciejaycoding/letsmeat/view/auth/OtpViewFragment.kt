@@ -71,6 +71,7 @@ class OtpViewFragment : Fragment() {
             when(it) {
                 is UiState.Failed -> {
                     progressDialog.stopLoading()
+                    Toast.makeText(view.context,it.message,Toast.LENGTH_SHORT).show()
                 }
 
                 is UiState.Loading -> {
@@ -93,11 +94,13 @@ class OtpViewFragment : Fragment() {
                 }
                 is UiState.Success -> {
                     progressDialog.stopLoading()
-                    it.data?.let {client ->
-                        authViewModel.createUser(client)
-                        return@observe
+                    if (it.data !== null) {
+                        authViewModel.createUser(it.data)
+                    } else {
+                        findNavController().popBackStack()
+                        findNavController().popBackStack()
                     }
-                    findNavController().popBackStack()
+
                 }
             }
         }
@@ -114,6 +117,7 @@ class OtpViewFragment : Fragment() {
                 is UiState.Success -> {
                     progressDialog.stopLoading()
                     Toast.makeText(view.context,it.data,Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
                     findNavController().popBackStack()
                 }
             }

@@ -12,7 +12,8 @@ class OrderItems(
     val quantity : Int  ? = null,
     val originalPrice : Float ? = null,
     val cost : Float ? = null,
-    val weight : Float ? = null
+    val weight : Float ? = null,
+val weightType : String ? =""
 ) : Parcelable{
 
 
