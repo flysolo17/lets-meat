@@ -2,6 +2,8 @@ package com.ciejaycoding.letsmeat.view.product
 
 import android.media.Image
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +41,7 @@ class ViewProduct : Fragment() {
     private val cartViewModel : CartViewModel by viewModels()
     private lateinit var loadingDialog: ProgressDialog
     private lateinit var transactionList : MutableList<Transaction>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -144,25 +147,59 @@ class ViewProduct : Fragment() {
         }
         view.findViewById<TextView>(R.id.textProductPrice).text = "₱ ${products.price}"
         view.findViewById<TextView>(R.id.textStocks).text = products.quantity.toString()
-        val textQuantity : TextView = view.findViewById(R.id.textQuantity)
-        textQuantity.text = defaultQuantity.toString()
+        val textQuantity : EditText = view.findViewById(R.id.textQuantity)
+        // Attach a TextWatcher to the EditText
+        textQuantity.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // This method is called before the text is changed.
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // This method is called when the text is being changed.
+
+                val newText = s.toString()
+                if (newText.isNotEmpty()) {
+                    try {
+                        val intValue = Integer.parseInt(newText) // Convert the text to an integer
+                        defaultQuantity =intValue
+                        // Now you can use the intValue for further processing
+                    } catch (e: NumberFormatException) {
+                        // Handle the case where the input is not a valid integer
+                    }
+                } else {
+
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isNotEmpty()) {
+                    val quantity = s.toString().toInt()
+                    if (quantity > args.products.quantity) {
+                        textQuantity.setText("1")
+                    }
+                }
+
+            }
+        })
+        textQuantity.setText(defaultQuantity.toString())
         view.findViewById<ImageButton>(R.id.buttonAdd).setOnClickListener {
             if (defaultQuantity < products.quantity) {
                 defaultQuantity += 1
-                textQuantity.text = defaultQuantity.toString()
+                textQuantity.setText(defaultQuantity.toString())
             }
         }
         view.findViewById<ImageButton>(R.id.buttonMinus).setOnClickListener {
             if (defaultQuantity >  1) {
                 defaultQuantity -= 1
-                textQuantity.text = defaultQuantity.toString()
+                textQuantity.setText(defaultQuantity.toString())
                 return@setOnClickListener
             }
             Toast.makeText(view.context,"minimum purchase is 1!",Toast.LENGTH_SHORT).show()
         }
         buttonAddToCart.setOnClickListener {
             FirebaseAuth.getInstance().currentUser?.let {
-                if (defaultQuantity != 0) {
+                if (defaultQuantity > 0) {
                     val  cart = Cart(products.code,defaultQuantity,System.currentTimeMillis())
                     cartViewModel.addToCart(uid = it.uid,cart)
                 }

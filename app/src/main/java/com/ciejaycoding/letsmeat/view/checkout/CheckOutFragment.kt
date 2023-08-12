@@ -96,6 +96,14 @@ class CheckOutFragment : Fragment() {
                 .setItems(items) { dialog, which ->
                     val cartAndProduct = args.cartAndProduct.toList()
                     binding.textTransactionType.text = items[which]
+                    if (which == 1) {
+                        binding.radioCash.visibility = View.GONE
+                        paymentType = PaymentType.GCASH
+                        binding.radioGroup.check(R.id.radioGcash)
+                    } else {
+                        binding.radioCash.visibility = View.VISIBLE
+
+                    }
                     displayInfo(cartAndProduct)
 
                 }
