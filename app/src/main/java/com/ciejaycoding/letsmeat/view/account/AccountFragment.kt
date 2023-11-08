@@ -54,8 +54,12 @@ class AccountFragment : Fragment() {
             val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(1)
             findNavController().navigate(directions)
         }
-        binding.buttonToRecieve.setOnClickListener {
+        binding.buttonToPickUp.setOnClickListener {
             val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(2)
+            findNavController().navigate(directions)
+        }
+        binding.buttonToRecieve.setOnClickListener {
+            val directions = AccountFragmentDirections.actionNavigationAccountToPurchasesFragment(3)
             findNavController().navigate(directions)
         }
         binding.buttonToRate.setOnClickListener {

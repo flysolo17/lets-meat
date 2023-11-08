@@ -143,6 +143,36 @@
                         android:gravity="center"
                         android:text="To Ship" />
                 </LinearLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_height="match_parent"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/buttonToPickUp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_margin="10dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_ships"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:text="Pick Up" />
+                </LinearLayout>
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="1dp"
                     android:layout_marginVertical="10dp"

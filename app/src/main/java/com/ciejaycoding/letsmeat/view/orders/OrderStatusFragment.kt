@@ -70,17 +70,18 @@ class OrderStatusFragment : Fragment(), PurchasesAdapter.OrderClickListener, Tra
                     list = (transactions?.filter { it.status == OrderStatus.TO_SHIP || it.status == OrderStatus.TO_PACKED} as MutableList<Transaction>?)!!
                 }
                 2 -> {
-
-                    list = (transactions?.filter { it.status == OrderStatus.TO_RECEIVE } as MutableList<Transaction>?)!!
+                    list = (transactions?.filter { it.status == OrderStatus.TO_PICK_UP } as MutableList<Transaction>?)!!
                 }
                 3 -> {
-
-                    list = (transactions?.filter { it.status == OrderStatus.COMPLETED } as MutableList<Transaction>?)!!
+                    list = (transactions?.filter { it.status == OrderStatus.TO_RECEIVE } as MutableList<Transaction>?)!!
                 }
                 4 -> {
-                    list = (transactions?.filter { it.status == OrderStatus.DECLINED } as MutableList<Transaction>?)!!
+                    list = (transactions?.filter { it.status == OrderStatus.COMPLETED } as MutableList<Transaction>?)!!
                 }
                 5 -> {
+                    list = (transactions?.filter { it.status == OrderStatus.DECLINED } as MutableList<Transaction>?)!!
+                }
+                6 -> {
                     list = (transactions?.filter { it.status == OrderStatus.CANCELED } as MutableList<Transaction>?)!!
                 }
             }
