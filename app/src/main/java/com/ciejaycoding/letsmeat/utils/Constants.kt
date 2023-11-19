@@ -18,7 +18,7 @@ const val CLIENTS_CART = "Cart"
 const val MESSAGE_TABLE= "Messages"
 const val STAFF_TABLE = "Staff"
 const val ORDER_TABLE = "Orders"
-const val PROJECT_ID = "OjwzBl5Fl2bZF0GOX2ltbi6QUkF2"
+const val PROJECT_ID = "EmrofYlFBtOG4c2gF5uhMIssxuD3"
 const val PROFILE_STORAGE = "profiles"
 const val TRANSACTION_TABLE = "Transactions"
 fun computePrice(cartAndProduct: CartAndProduct) : Float {

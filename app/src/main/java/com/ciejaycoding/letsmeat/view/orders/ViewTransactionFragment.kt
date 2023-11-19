@@ -13,6 +13,8 @@ import androidx.navigation.fragment.navArgs
 import com.ciejaycoding.letsmeat.R
 import com.ciejaycoding.letsmeat.databinding.FragmentViewTransactionBinding
 import com.ciejaycoding.letsmeat.models.Details
+import com.ciejaycoding.letsmeat.models.OrderStatus
+import com.ciejaycoding.letsmeat.models.OrderType
 import com.ciejaycoding.letsmeat.models.Transaction
 import com.ciejaycoding.letsmeat.utils.*
 import com.ciejaycoding.letsmeat.viewmodel.TransactionViewModel
@@ -62,6 +64,11 @@ class ViewTransactionFragment : Fragment() {
         binding.textTotal.text = formatPrice(orderTotal(data.order).toFloat())
         data.details.reversed().mapIndexed { index, details ->
             displayDetails(details,index)
+        }
+        if ((data.status == OrderStatus.TO_RECEIVE || data.status == OrderStatus.COMPLETED)&& data.order.orderType == OrderType.DELIVER ) {
+            binding.cardDriver.visibility = View.VISIBLE
+        } else {
+            binding.cardDriver.visibility = View.GONE
         }
     }
     private fun displayDetails(detail : Details,index : Int) {
