@@ -95,4 +95,63 @@
     <string name="hyperlink"><a href="http://localhost:4200/eula">Click here</a></string>
     <string name="jff_frozen_meat">JFF Frozen Meat</string>
     <string name="deliver">DELIVER</string>
+
+
+    <string name="terms_and_conditions">
+        TERMS &amp; CONDITIONS\n\n
+
+        Last Updated: [12/21/2023]\n\n
+
+        1.) User Account Responsibilities:\n
+        Users are responsible for maintaining the confidentiality of their account information, including login credentials. Any activity that occurs under the user\'s account is their responsibility.\n\n
+        2.) Prohibited Activities:\n
+        Clearly outline activities that are strictly prohibited on the platform, such as fraudulent transactions, hacking, or any other illegal activities. Specify the consequences for engaging in such activities, including account suspension or legal action.\n\n
+        3.) Payment Terms:\n
+        The application only accepts COH, COD, and Gcash payments throughout the whole process. Any other transaction that is not mentioned above is strictly prohibited by the company. Any result of unusual payments is not covered by the company.\n\n
+        4.) Shipping and Delivery:\n
+        JJF FROZEN FOODS company offers a COD mode of transaction. An additional Fee will be charged to the customer once they ordered a product through COD method. Any damaged, loss, or wrong package delivery is covered by the company as long as it is proven that it is the company\'s negligence.\n\n
+        5.) Intellectual Property Rights:\n
+        All of the trademarks, photos, and descriptions of the products are authorized by the companies. Users should not reproduce, distribute, or modify any content without explicit permission.
+    </string>
+
+
+    <string name="privacy">
+
+        Privacy Policy \n\n
+
+        Last Updated: [12/21/2023]\n\n
+
+        1. Information We Collect:\n
+        We collect basic user information for account creation and app functionality.
+        No sensitive personal data is gathered without your explicit consent. \n\n
+
+        2. How We Use Your Data:\n
+        Your information is used to personalize your experience and improve our app.
+        We do not sell or share your data with third parties for marketing purposes. \n\n
+
+        3. Security Measures:\n
+        We employ industry-standard measures to safeguard your data.
+        Your account is protected by secure login methods. \n\n
+
+        4. Third-Party Services:\n
+        We may use third-party services for analytics, but your data remains anonymous.\n
+        Review their privacy policies for further details.
+
+        5. User Controls:\n
+        You can review, update, or delete your data within the app settings.\n
+        Opt-out of non-essential data collection at any time. \n\n
+
+        6. Children\'s Privacy:\n
+        Our app is not intended for users under 13.\n
+        We do not knowingly collect information from children. \n\n
+
+        7. Changes to Privacy Policy:\n
+        Any updates will be posted here. Check regularly for changes.\n
+        Your continued use implies acceptance of the updated policy. \n\n
+
+        8. Contact Us:\n
+        For questions or concerns, contact us at [JJF.ADM1@gmail.com].\n
+        Subject: LET\'S MEAT Privacy Concerns. \n\n
+    </string>
+
 </resources>

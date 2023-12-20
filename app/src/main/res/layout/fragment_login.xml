@@ -43,7 +43,17 @@
                 android:hint="@string/phone_number"
                 android:maxLength="10"/>
         </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/textTerms"
+            android:layout_width="match_parent"
 
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:text="By clicking continue, you are agreeing to Let's Meat Terms and Conditions and are acknowledge our Privacy Policy applies."
+            android:autoLink="web"
+            android:linksClickable="true"
+            />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonContinue"
             android:layout_width="match_parent"

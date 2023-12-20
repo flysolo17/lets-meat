@@ -3,7 +3,9 @@ package com.ciejaycoding.letsmeat.view.auth
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,25 +48,37 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val spannableStringBuilder = SpannableStringBuilder(binding.textTerms.text)
+        val termsAndConditionsSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                findNavController().navigate(R.id.action_loginFragment_to_termsFragment)
+            }
+        }
+
+        val privacyPolicySpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Handle the click event, e.g., open the privacy policy page
+                findNavController().navigate(R.id.action_loginFragment_to_privacyFragment)
+            }
+        }
+
+        // Set the ClickableSpans for the links
+        spannableStringBuilder.setSpan(termsAndConditionsSpan, 53, 73, 0)
+        spannableStringBuilder.setSpan(privacyPolicySpan, 98, 112, 0)
+
+        // Apply the SpannableString to the TextView
+        binding.textTerms.text = spannableStringBuilder
+        binding.textTerms.movementMethod = LinkMovementMethod.getInstance()
+
         progressDialog = ProgressDialog(view.context)
         binding.buttonContinue.setOnClickListener {
-            MaterialAlertDialogBuilder(binding.root.context)
-                .setTitle("Terms And Conditions")
-                .setMessage("By clicking okay you agree to our terms and conditions.")
-                .setNegativeButton("Cancel") { dialog,_ ->
-                    dialog.dismiss()
-                }
-                .setPositiveButton("Okay") { dialog,_ ->
-                    val phone  = binding.inputPhone.text.toString()
-                    if (phone.startsWith("9") && phone.length == 10) {
-                        authViewModel.sendOtp(requireActivity(),phone);
-                        return@setPositiveButton
-                    }
-                    binding.inputPhoneLayout.error = "Invalid Phone number"
-                    Toast.makeText(view.context,"Invalid", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                }
-                .show()
+            val phone  = binding.inputPhone.text.toString()
+            if (phone.startsWith("9") && phone.length == 10) {
+                authViewModel.sendOtp(requireActivity(),phone);
+                return@setOnClickListener
+            }
+            binding.inputPhoneLayout.error = "Invalid Phone number"
+            Toast.makeText(view.context,"Invalid", Toast.LENGTH_SHORT).show()
         }
         //observers
         authViewModel.sendOTP.observe(viewLifecycleOwner) {

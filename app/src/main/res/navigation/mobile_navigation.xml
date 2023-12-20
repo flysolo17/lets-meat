@@ -84,6 +84,12 @@
         <action
             android:id="@+id/action_loginFragment_to_otpViewFragment"
             app:destination="@id/otpViewFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
@@ -189,4 +195,14 @@
             android:id="@+id/action_historyFragment_to_viewTransactionFragment"
             app:destination="@id/viewTransactionFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.ciejaycoding.letsmeat.view.auth.TermsFragment"
+        android:label="Terms And Conditions"
+        tools:layout="@layout/fragment_terms" />
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.ciejaycoding.letsmeat.view.auth.PrivacyFragment"
+        android:label="Privacy Policy"
+        tools:layout="@layout/fragment_privacy" />
 </navigation>
